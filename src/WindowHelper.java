@@ -1,3 +1,5 @@
+import com.sun.tools.javac.Main;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -9,14 +11,13 @@ public class WindowHelper implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        System.out.println("Closing Window: " + Main.isActive);
-        Main.Test();
+        System.out.println("Closing Window: " + Engine.isActive);
+        Engine.isActive = false;
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
-        System.out.println("Closed Window: " + Main.isActive);
-        Main.Test();
+
     }
 
     @Override

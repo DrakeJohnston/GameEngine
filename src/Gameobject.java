@@ -1,4 +1,6 @@
+
 public class Gameobject {
+
     private Vector2 pos;
     private String symbol;
     boolean isActive = true;
