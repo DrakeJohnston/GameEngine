@@ -1,3 +1,4 @@
+import java.awt.event.KeyEvent;
 
 public class MainRunner extends Engine {
 
@@ -13,8 +14,16 @@ public class MainRunner extends Engine {
     }
 
     @Override
+    public void HandleInput() {
+        if(KeyEventListener.KeyMap.get(KeyEvent.VK_P)){
+            System.out.println("Test Case Worked!!");
+        }
+        super.HandleInput();
+    }
+
+    @Override
     public void gameLoop() {
-        System.out.println("A");
+       // System.out.println("A");
         super.gameLoop();
     }
 }

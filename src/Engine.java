@@ -1,4 +1,7 @@
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
+import static java.awt.event.KeyEvent.*;
 
 public class Engine {
 
@@ -15,14 +18,21 @@ public class Engine {
     public void gameLoop(){
 
         RenderObjects();
+        HandleInput();
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         if(isActive) {
             gameLoop();
+        }
+    }
+
+    public void HandleInput() {
+        if (KeyEventListener.KeyMap.get(VK_BACK_SLASH)) {
+            System.out.println("debug key! : " + KeyEventListener.KeyMap.get(VK_BACK_SLASH));
         }
     }
 

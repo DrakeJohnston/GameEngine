@@ -32,6 +32,8 @@ public class GUI extends JFrame {
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
+        window.addKeyListener(new KeyEventListener());
+
         window.add(uiSpace);
         uiSpace.setSize(DIM,DIM);
         uiSpace.setBackground(Color.PINK);
