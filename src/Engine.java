@@ -5,8 +5,10 @@ public class Engine {
     public static ArrayList<Gameobject> objects = new ArrayList<>();
     public static boolean isActive = true;
 
+    public GUI ui;
+
     public void init(){
-        GUI ui = new GUI(600,50,"0");
+        ui = new GUI(600,50,"0");
         gameLoop();
     }
 
@@ -25,7 +27,9 @@ public class Engine {
     }
 
     private void RenderObjects() {
-
+        for(Gameobject g : objects){
+            ui.addToScreen(g.getPos(), g.getSymbol());
+        }
     }
 
 }

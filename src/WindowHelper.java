@@ -1,5 +1,3 @@
-import com.sun.tools.javac.Main;
-
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 

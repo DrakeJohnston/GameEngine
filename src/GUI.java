@@ -8,14 +8,20 @@ import java.awt.event.MouseListener;
 public class GUI extends JFrame {
     public int DIM = 600;
     public int GRID_SIZE = 50;
+
     public static String[][] preScreenSpace;
+    public static JLabel[][] screenSpace;
+
+
     public static JPanel uiSpace;
     public static JFrame window;
 
     public GUI(int DIM, int GRID_SIZE, String backgroundChar){
         this.DIM = DIM;
         this.GRID_SIZE = GRID_SIZE;
+
         preScreenSpace = new String[GRID_SIZE][GRID_SIZE];
+        screenSpace = new JLabel[GRID_SIZE][GRID_SIZE];
 
         window = new JFrame();
         uiSpace = new JPanel();
@@ -40,6 +46,7 @@ public class GUI extends JFrame {
                 //System.out.println("x: " + x + " y: " + y);
                 l.setText(backgroundChar);
                 uiSpace.add(l);
+                screenSpace[x][y] = l;
             }
         }
 
@@ -86,11 +93,11 @@ public class GUI extends JFrame {
     public void renderScreen(){
         for(int x = 0; x < GRID_SIZE; x++) {
             for (int y = 0; y < GRID_SIZE; y++) {
-                JLabel l = new JLabel("0");
-                l.setBounds((x*10) + 40, (y*10)+30, 10, 10);
-                //System.out.println("x: " + x + " y: " + y);
+//                JLabel l = new JLabel("0");
+//                l.setBounds((x*10) + 40, (y*10)+30, 10, 10);
+//                System.out.println("x: " + x + " y: " + y);
+                JLabel l = screenSpace[x][y];
                 l.setText(preScreenSpace[x][y]);
-                uiSpace.add(l);
             }
         }
         uiSpace.repaint();

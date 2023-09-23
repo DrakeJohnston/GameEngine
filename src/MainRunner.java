@@ -8,6 +8,7 @@ public class MainRunner extends Engine {
 
     @Override
     public void init() {
+        Gameobject test = new Gameobject(new Vector2(0,0), "A");
         super.init();
     }
 
