@@ -17,7 +17,7 @@ public class Engine {
 
     public void gameLoop(){
 
-        RenderObjects();
+        ui.PreparePreScreen();
         HandleInput();
 
         try {
@@ -36,10 +36,29 @@ public class Engine {
         }
     }
 
-    private void RenderObjects() {
+//    private void RenderObjects() {
+//        ui.ClearPreScreen();
+//        for(Gameobject g : objects){
+//            ui.addToScreen(g.getPos(), g.getSymbol());
+//        }
+//    }
+
+    public static Gameobject FindGameObject(String name){
         for(Gameobject g : objects){
-            ui.addToScreen(g.getPos(), g.getSymbol());
+            if(g.getName().equals(name)){
+                return g;
+            }
         }
+        return null;
+    }
+
+    public static Gameobject FindGameObject(int id){
+        for(Gameobject g : objects){
+            if(g.getID() == id){
+                return g;
+            }
+        }
+        return null;
     }
 
 }

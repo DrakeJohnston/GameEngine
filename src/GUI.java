@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -87,12 +85,27 @@ public class GUI extends JFrame {
         uiSpace.repaint();
     }
 
-    public void addToScreen(Vector2 pos, String sym){
-        preScreenSpace[pos.x][pos.y] = sym;
-        renderScreen();
+    public void ClearPreScreen(){
+        for(int x = 0; x < preScreenSpace.length; x++){
+            for(int y = 0; y < preScreenSpace[0].length; y++){
+                preScreenSpace[x][y] = "0";
+            }
+        }
     }
 
-    public void renderScreen(){
+    public void PreparePreScreen(){
+        ClearPreScreen();
+        for(Gameobject o : Engine.objects){
+            Vector2 pos = o.getPos();
+            if(pos.x < preScreenSpace.length && pos.x >= 0 && pos.y < preScreenSpace[0].length && pos.y >= 0){
+                preScreenSpace[pos.x][pos.y] = o.getSymbol();
+            }
+        }
+
+        UpdateScreen();
+    }
+
+    public void UpdateScreen(){
         for(int x = 0; x < GRID_SIZE; x++) {
             for (int y = 0; y < GRID_SIZE; y++) {
 //                JLabel l = new JLabel("0");
