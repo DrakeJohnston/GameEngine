@@ -1,3 +1,7 @@
+package com.drake.engine.helpers;
+
+import com.drake.engine.core.Engine;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 

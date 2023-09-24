@@ -1,3 +1,9 @@
+package com.drake.engine.core;
+
+import com.drake.engine.math.Vector2;
+import com.drake.engine.helpers.InputHandler;
+import com.drake.engine.helpers.WindowHelper;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -30,7 +36,7 @@ public class GUI extends JFrame {
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        window.addKeyListener(new KeyEventListener());
+        window.addKeyListener(new InputHandler());
 
         window.add(uiSpace);
         uiSpace.setSize(DIM,DIM);
@@ -88,7 +94,7 @@ public class GUI extends JFrame {
     public void ClearPreScreen(){
         for(int x = 0; x < preScreenSpace.length; x++){
             for(int y = 0; y < preScreenSpace[0].length; y++){
-                preScreenSpace[x][y] = "0";
+                preScreenSpace[x][y] = "'";
             }
         }
     }

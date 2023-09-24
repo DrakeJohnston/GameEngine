@@ -1,9 +1,11 @@
+package com.drake.engine.helpers;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class KeyEventListener implements KeyListener {
+public class InputHandler implements KeyListener {
 
     /*List of keycodes*/
     //32 -- Space
@@ -92,7 +94,7 @@ public class KeyEventListener implements KeyListener {
     public static Map<Integer, Boolean> KeyMap = new HashMap<>();
 
     //adds all relevant keycodes to the map
-    public KeyEventListener(){
+    public InputHandler(){
         //char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         for(int i = 0; i < 526; i++){
             KeyMap.put(i, false);

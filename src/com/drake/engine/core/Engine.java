@@ -1,4 +1,7 @@
-import java.awt.event.KeyEvent;
+package com.drake.engine.core;
+
+import com.drake.engine.helpers.InputHandler;
+
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
@@ -31,14 +34,14 @@ public class Engine {
     }
 
     public void HandleInput() {
-        if (KeyEventListener.KeyMap.get(VK_BACK_SLASH)) {
-            System.out.println("debug key! : " + KeyEventListener.KeyMap.get(VK_BACK_SLASH));
+        if (InputHandler.KeyMap.get(VK_BACK_SLASH)) {
+            System.out.println("debug key! : " + InputHandler.KeyMap.get(VK_BACK_SLASH));
         }
     }
 
 //    private void RenderObjects() {
 //        ui.ClearPreScreen();
-//        for(Gameobject g : objects){
+//        for(com.drake.engine.core.Gameobject g : objects){
 //            ui.addToScreen(g.getPos(), g.getSymbol());
 //        }
 //    }

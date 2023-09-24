@@ -1,3 +1,7 @@
+package com.drake.engine.core;
+
+import com.drake.engine.core.Engine;
+import com.drake.engine.math.Vector2;
 
 public class Gameobject {
 

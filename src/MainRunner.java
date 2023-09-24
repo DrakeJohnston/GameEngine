@@ -1,3 +1,8 @@
+import com.drake.engine.core.Engine;
+import com.drake.engine.core.Gameobject;
+import com.drake.engine.helpers.InputHandler;
+import com.drake.engine.math.Vector2;
+
 import java.awt.event.KeyEvent;
 
 public class MainRunner extends Engine {
@@ -15,17 +20,17 @@ public class MainRunner extends Engine {
 
     @Override
     public void HandleInput() {
-        Gameobject o = Engine.FindGameObject("TEST");
-        if(KeyEventListener.KeyMap.get(KeyEvent.VK_W)){
+        Gameobject o = FindGameObject("TEST");
+        if(InputHandler.KeyMap.get(KeyEvent.VK_W)){
             o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
         }
-        if(KeyEventListener.KeyMap.get(KeyEvent.VK_S)){
+        if(InputHandler.KeyMap.get(KeyEvent.VK_S)){
             o.setPos(new Vector2(o.getPos().x, o.getPos().y+1));
         }
-        if(KeyEventListener.KeyMap.get(KeyEvent.VK_A)){
+        if(InputHandler.KeyMap.get(KeyEvent.VK_A)){
             o.setPos(new Vector2(o.getPos().x-1, o.getPos().y));
         }
-        if(KeyEventListener.KeyMap.get(KeyEvent.VK_D)){
+        if(InputHandler.KeyMap.get(KeyEvent.VK_D)){
             o.setPos(new Vector2(o.getPos().x+1, o.getPos().y));
         }
         super.HandleInput();
