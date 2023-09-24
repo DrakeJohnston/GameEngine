@@ -14,7 +14,8 @@ public class MainRunner extends Engine {
 
     @Override
     public void init() {
-        Gameobject test = new Gameobject(new Vector2(0,0), "A", "TEST");
+        Gameobject test = new Gameobject(new Vector2(0,0), "A", "TEST",1);
+        Gameobject sc = new Gameobject(new Vector2(5,5), "|", "sc", 5);
         super.init();
     }
 

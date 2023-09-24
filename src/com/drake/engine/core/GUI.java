@@ -101,10 +101,12 @@ public class GUI extends JFrame {
 
     public void PreparePreScreen(){
         ClearPreScreen();
-        for(Gameobject o : Engine.objects){
-            Vector2 pos = o.getPos();
-            if(pos.x < preScreenSpace.length && pos.x >= 0 && pos.y < preScreenSpace[0].length && pos.y >= 0){
-                preScreenSpace[pos.x][pos.y] = o.getSymbol();
+
+        for(Gameobject s : Engine.objects){
+            for(int x=s.getPos().x; x < s.getPos().x + s.getSize(); x++){
+                for(int y=s.getPos().y; y < s.getPos().y + s.getSize(); y++){
+                    preScreenSpace[x][y] = s.getSymbol();
+                }
             }
         }
 
