@@ -10,7 +10,9 @@ public class Gameobject {
     private int id = 0;
     boolean isActive = true;
     private int size;
-    private String[][] shape;
+    private Vector2[][] shape;
+
+    private boolean isStatic = true;
 
     static int lastID = 0;
 
@@ -19,7 +21,7 @@ public class Gameobject {
         this.symbol = symbol;
         this.name = name;
         this.size = size;
-        shape = new String[size][size];
+        shape = new Vector2[size][size];
         createShape();
         initGameObject();
     }
@@ -34,7 +36,7 @@ public class Gameobject {
     private void createShape(){
         for(int x=0; x<size; x++){
             for(int y=0; y<size; y++){
-                shape[x][y] = getSymbol();
+                shape[x][y] = new Vector2(getPos().x + x, getPos().y + y);
             }
         }
     }
@@ -77,5 +79,13 @@ public class Gameobject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public void setStatic(boolean aStatic) {
+        isStatic = aStatic;
     }
 }
