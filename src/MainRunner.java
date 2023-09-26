@@ -14,10 +14,25 @@ public class MainRunner extends Engine {
 
     @Override
     public void init() {
-        Gameobject test = new Gameobject(new Vector2(0,0), "A", "TEST",1,2);
-        Gameobject sc = new Gameobject(new Vector2(5,5), "|", "sc", 5, 1);
-        Gameobject sc2 = new Gameobject(new Vector2(9,9), "|", "sc", 5, 1);
+        //Other
+        Gameobject sc = new Gameobject(new Vector2(5,5), new Vector2(5,5), "|", "sc");
+        Gameobject sc2 = new Gameobject(new Vector2(9,9), new Vector2(5,5), "|", "sc");
+
+        Gameobject door = new Gameobject(new Vector2(47,5), new Vector2(1,2), "D", "door");
+        Gameobject doorp2 = new Gameobject(new Vector2(47,7), new Vector2(1,1), "~", "door");
+        Gameobject doorp3 = new Gameobject(new Vector2(47,4), new Vector2(1,1), "~", "door");
+
+        //Walls
+        Gameobject sc3 = new Gameobject(new Vector2(0,0), new Vector2(50,2), "|", "sc");
+        Gameobject sc4 = new Gameobject(new Vector2(0,0), new Vector2(2,50), "|", "sc");
+        Gameobject sc5 = new Gameobject(new Vector2(0,48), new Vector2(50,2), "|", "sc");
+        Gameobject sc6 = new Gameobject(new Vector2(48,0), new Vector2(2,50), "|", "sc");
+
+        //Player
+        Gameobject test = new Gameobject(new Vector2(8,8), new Vector2(1,1), "A", "TEST");
+
         sc.setStatic(false);
+        door.setStatic(false);
         super.init();
     }
 

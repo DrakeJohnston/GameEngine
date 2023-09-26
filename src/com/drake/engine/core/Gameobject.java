@@ -10,31 +10,20 @@ public class Gameobject {
     private int RenderOrder;
     private int id = 0;
     boolean isActive = true;
-    private int size;
+    private Vector2 size;
     private final Vector2[][] shape;
 
     private boolean isStatic = true;
 
     static int lastID = 0;
 
-    public Gameobject(Vector2 pos, String symbol, String name, int size){
+    public Gameobject(Vector2 pos, Vector2 size, String symbol, String name){
         this.pos = pos;
         this.symbol = symbol;
         this.name = name;
         this.size = size;
-        shape = new Vector2[size][size];
+        shape = new Vector2[size.x][size.y];
         RenderOrder = 0;
-        createShape();
-        initGameObject();
-    }
-
-    public  Gameobject(Vector2 pos, String symbol, String name, int size, int order){
-        this.pos = pos;
-        this.symbol = symbol;
-        this.name = name;
-        this.size = size;
-        shape = new Vector2[size][size];
-        RenderOrder = order;
         createShape();
         initGameObject();
     }
@@ -47,8 +36,8 @@ public class Gameobject {
     }
 
     private void createShape(){
-        for(int x=0; x<size; x++){
-            for(int y=0; y<size; y++){
+        for(int x=0; x<size.x; x++){
+            for(int y=0; y<size.y; y++){
                 shape[x][y] = new Vector2(getPos().x + x, getPos().y + y);
             }
         }
@@ -72,11 +61,11 @@ public class Gameobject {
         return shape;
     }
 
-    public int getSize() {
+    public Vector2 getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(Vector2 size) {
         this.size = size;
     }
 

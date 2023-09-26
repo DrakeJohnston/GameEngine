@@ -105,29 +105,15 @@ public class GUI extends JFrame {
     }
 
     private static void SetupScreen() {
-        ArrayList<Gameobject> unrenderedOBJs = new ArrayList<>();
-        unrenderedOBJs.addAll(Engine.objects);
-
-        ArrayList<Gameobject> sortedList = SortRenderLayers(unrenderedOBJs);
-
         for(Gameobject s : Engine.objects){
-            for(int x=s.getPos().x; x < s.getPos().x + s.getSize(); x++){
-                for(int y=s.getPos().y; y < s.getPos().y + s.getSize(); y++){
+            for(int x=s.getPos().x; x < s.getPos().x + s.getSize().x; x++){
+                for(int y=s.getPos().y; y < s.getPos().y + s.getSize().y; y++){
                     if(s.getPos().x < GRID_SIZE-1 && s.getPos().x >= 0) {
                         if(s.getPos().y < GRID_SIZE-1 && s.getPos().y >= 0) {
                             preScreenSpace[x][y] = s.getSymbol();
                         }
                     }
                 }
-            }
-        }
-    }
-
-    private static ArrayList<Gameobject> SortRenderLayers(ArrayList<Gameobject> unrenderedOBJs) {
-        Gameobject tester = unrenderedOBJs.get(0);
-        for(int i=1; i < unrenderedOBJs.size()-1; i++){
-            if(tester.getRenderOrder() > unrenderedOBJs.get(i).getRenderOrder()){
-                
             }
         }
     }
