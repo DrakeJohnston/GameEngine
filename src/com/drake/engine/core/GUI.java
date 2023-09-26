@@ -8,10 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class GUI extends JFrame {
-    public int DIM = 600;
-    public int GRID_SIZE = 50;
+    public static int DIM = 600;
+    public static int GRID_SIZE = 50;
 
     public static String[][] preScreenSpace;
     public static JLabel[][] screenSpace;
@@ -20,9 +21,7 @@ public class GUI extends JFrame {
     public static JPanel uiSpace;
     public static JFrame window;
 
-    public GUI(int DIM, int GRID_SIZE, String backgroundChar){
-        this.DIM = DIM;
-        this.GRID_SIZE = GRID_SIZE;
+    public GUI(String backgroundChar){
 
         preScreenSpace = new String[GRID_SIZE][GRID_SIZE];
         screenSpace = new JLabel[GRID_SIZE][GRID_SIZE];
@@ -101,16 +100,36 @@ public class GUI extends JFrame {
 
     public void PreparePreScreen(){
         ClearPreScreen();
+        SetupScreen();
+        UpdateScreen();
+    }
+
+    private static void SetupScreen() {
+        ArrayList<Gameobject> unrenderedOBJs = new ArrayList<>();
+        unrenderedOBJs.addAll(Engine.objects);
+
+        ArrayList<Gameobject> sortedList = SortRenderLayers(unrenderedOBJs);
 
         for(Gameobject s : Engine.objects){
             for(int x=s.getPos().x; x < s.getPos().x + s.getSize(); x++){
                 for(int y=s.getPos().y; y < s.getPos().y + s.getSize(); y++){
-                    preScreenSpace[x][y] = s.getSymbol();
+                    if(s.getPos().x < GRID_SIZE-1 && s.getPos().x >= 0) {
+                        if(s.getPos().y < GRID_SIZE-1 && s.getPos().y >= 0) {
+                            preScreenSpace[x][y] = s.getSymbol();
+                        }
+                    }
                 }
             }
         }
+    }
 
-        UpdateScreen();
+    private static ArrayList<Gameobject> SortRenderLayers(ArrayList<Gameobject> unrenderedOBJs) {
+        Gameobject tester = unrenderedOBJs.get(0);
+        for(int i=1; i < unrenderedOBJs.size()-1; i++){
+            if(tester.getRenderOrder() > unrenderedOBJs.get(i).getRenderOrder()){
+                
+            }
+        }
     }
 
     public void UpdateScreen(){

@@ -14,8 +14,10 @@ public class MainRunner extends Engine {
 
     @Override
     public void init() {
-        Gameobject test = new Gameobject(new Vector2(0,0), "A", "TEST",1);
-        Gameobject sc = new Gameobject(new Vector2(5,5), "|", "sc", 5);
+        Gameobject test = new Gameobject(new Vector2(0,0), "A", "TEST",1,2);
+        Gameobject sc = new Gameobject(new Vector2(5,5), "|", "sc", 5, 1);
+        Gameobject sc2 = new Gameobject(new Vector2(9,9), "|", "sc", 5, 1);
+        sc.setStatic(false);
         super.init();
     }
 
@@ -23,16 +25,17 @@ public class MainRunner extends Engine {
     public void HandleInput() {
         Gameobject o = FindGameObject("TEST");
         if(InputHandler.KeyMap.get(KeyEvent.VK_W)){
-            o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
+            //o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
+            o.Move(new Vector2(o.getPos().x, o.getPos().y-1));
         }
         if(InputHandler.KeyMap.get(KeyEvent.VK_S)){
-            o.setPos(new Vector2(o.getPos().x, o.getPos().y+1));
+            o.Move(new Vector2(o.getPos().x, o.getPos().y+1));
         }
         if(InputHandler.KeyMap.get(KeyEvent.VK_A)){
-            o.setPos(new Vector2(o.getPos().x-1, o.getPos().y));
+            o.Move(new Vector2(o.getPos().x-1, o.getPos().y));
         }
         if(InputHandler.KeyMap.get(KeyEvent.VK_D)){
-            o.setPos(new Vector2(o.getPos().x+1, o.getPos().y));
+            o.Move(new Vector2(o.getPos().x+1, o.getPos().y));
         }
         super.HandleInput();
     }

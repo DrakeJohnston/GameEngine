@@ -1,6 +1,7 @@
 package com.drake.engine.core;
 
 import com.drake.engine.helpers.InputHandler;
+import com.drake.engine.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class Engine {
     public GUI ui;
 
     public void init(){
-        ui = new GUI(600,50,"0");
+        ui = new GUI("0");
         gameLoop();
     }
 
@@ -46,12 +47,31 @@ public class Engine {
 //        }
 //    }
 
+    public static void AddNewObject(Gameobject gameobject){
+        objects.add(gameobject);
+    }
+
     public static Gameobject FindGameObject(String name){
         for(Gameobject g : objects){
             if(g.getName().equals(name)){
                 return g;
             }
         }
+        return null;
+    }
+
+    public static Gameobject FindGameObject(Vector2 vec){
+        for(Gameobject g : objects){
+            Vector2[][] s = g.getShape();
+            for(int x=0; x < s.length; x++){
+                for (int y=0; y < s[0].length; y++){
+                    if(s[x][y].CompareTo(vec)){
+                        return g;
+                    }
+                }
+            }
+        }
+
         return null;
     }
 

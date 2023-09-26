@@ -7,10 +7,11 @@ public class Gameobject {
     private Vector2 pos;
     private String symbol;
     private String name;
+    private int RenderOrder;
     private int id = 0;
     boolean isActive = true;
     private int size;
-    private Vector2[][] shape;
+    private final Vector2[][] shape;
 
     private boolean isStatic = true;
 
@@ -22,6 +23,18 @@ public class Gameobject {
         this.name = name;
         this.size = size;
         shape = new Vector2[size][size];
+        RenderOrder = 0;
+        createShape();
+        initGameObject();
+    }
+
+    public  Gameobject(Vector2 pos, String symbol, String name, int size, int order){
+        this.pos = pos;
+        this.symbol = symbol;
+        this.name = name;
+        this.size = size;
+        shape = new Vector2[size][size];
+        RenderOrder = order;
         createShape();
         initGameObject();
     }
@@ -30,7 +43,7 @@ public class Gameobject {
         id = lastID+1;
         lastID = id;
 
-        Engine.objects.add(this);
+        Engine.AddNewObject(this);
     }
 
     private void createShape(){
@@ -39,6 +52,24 @@ public class Gameobject {
                 shape[x][y] = new Vector2(getPos().x + x, getPos().y + y);
             }
         }
+    }
+
+    public void Move(Vector2 pos){
+        if(!CheckForBlocking(pos)){
+          setPos(pos);
+        }
+    }
+
+    private boolean CheckForBlocking(Vector2 pos){
+        if (Engine.FindGameObject(pos) != null) {
+            Gameobject o = Engine.FindGameObject(pos);
+            return o.isStatic;
+        }
+        return false;
+    }
+
+    public Vector2[][] getShape() {
+        return shape;
     }
 
     public int getSize() {
@@ -51,6 +82,14 @@ public class Gameobject {
 
     public int getID(){
         return id;
+    }
+
+    public int getRenderOrder(){
+        return RenderOrder;
+    }
+
+    public void setRenderOrder(int order){
+        RenderOrder = order;
     }
 
     public void setActive(boolean active) {
