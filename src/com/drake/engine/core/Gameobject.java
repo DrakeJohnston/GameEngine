@@ -4,6 +4,10 @@ import com.drake.engine.math.Vector2;
 
 public class Gameobject {
 
+    public static enum Direction{
+        UP,DOWN,LEFT,RIGHT
+    }
+
     private Vector2 pos;
     private String symbol;
     private String name;
@@ -43,9 +47,101 @@ public class Gameobject {
         }
     }
 
-    public void Move(Vector2 pos){
-        if(!CheckForBlocking(pos)){
-          setPos(pos);
+//    public void Move(Vector2 pos){
+//        if(!CheckForBlocking(pos)){
+//          setPos(pos);
+//        }
+//    }
+
+    //TODO: Optimise a lil as the cases can probably be made into one method as they are similar
+    public void Move(int amount, Direction d){
+        switch (d){
+            case UP -> {
+                if (Engine.FindGameObject(new Vector2(pos.x, pos.y-amount)) != null) {
+                    Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y-amount));
+                    if(!o.isStatic){
+                        setPos(new Vector2(pos.x, pos.y-amount));
+                    }else{
+                        if(amount>0) {
+                            Move(amount - 1, d);
+                        }
+                    }
+                }else {
+                    setPos(new Vector2(pos.x, pos.y-amount));
+                }
+            }
+            case DOWN -> {
+                if(size.y > 1) {
+                    if (Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size.y))) != null) {
+                        Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size.y)));
+                        if (!o.isStatic) {
+                            setPos(new Vector2(pos.x, pos.y + amount));
+                        } else {
+                            if (amount > 0) {
+                                Move(amount - 1, d);
+                            }
+                        }
+                    } else {
+                        setPos(new Vector2(pos.x, pos.y + amount));
+                    }
+                }else {
+                    if (Engine.FindGameObject(new Vector2(pos.x, pos.y + amount)) != null) {
+                        Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y + amount));
+                        if (!o.isStatic) {
+                            setPos(new Vector2(pos.x, pos.y + amount));
+                        } else {
+                            if (amount > 0) {
+                                Move(amount - 1, d);
+                            }
+                        }
+                    } else {
+                        setPos(new Vector2(pos.x, pos.y + amount));
+                    }
+                }
+            }
+            case LEFT -> {
+                if (Engine.FindGameObject(new Vector2(pos.x-amount, pos.y)) != null) {
+                    Gameobject o = Engine.FindGameObject(new Vector2(pos.x-amount, pos.y));
+                    if(!o.isStatic){
+                        setPos(new Vector2(pos.x-amount, pos.y));
+                    }else{
+                        if(amount>0) {
+                            Move(amount - 1, d);
+                        }
+                    }
+                }else {
+                    setPos(new Vector2(pos.x-amount, pos.y));
+                }
+            }
+            case RIGHT -> {
+                if(size.x>0) {
+                    if (Engine.FindGameObject(new Vector2(pos.x + (amount + size.x), pos.y)) != null) {
+                        Gameobject o = Engine.FindGameObject(new Vector2(pos.x + (amount + size.x), pos.y));
+                        if (!o.isStatic) {
+                            setPos(new Vector2(pos.x + amount, pos.y));
+                        } else {
+                            if (amount > 0) {
+                                Move(amount - 1, d);
+                            }
+                        }
+                    } else {
+                        setPos(new Vector2(pos.x + amount, pos.y));
+                    }
+                }else {
+                    if (Engine.FindGameObject(new Vector2(pos.x + amount, pos.y)) != null) {
+                        Gameobject o = Engine.FindGameObject(new Vector2(pos.x + amount, pos.y));
+                        if (!o.isStatic) {
+                            setPos(new Vector2(pos.x + amount, pos.y));
+                        } else {
+                            if (amount > 0) {
+                                Move(amount - 1, d);
+                            }
+                        }
+                    } else {
+                        setPos(new Vector2(pos.x + amount, pos.y));
+                    }
+                }
+            }
         }
     }
 
@@ -115,5 +211,10 @@ public class Gameobject {
 
     public void setStatic(boolean aStatic) {
         isStatic = aStatic;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

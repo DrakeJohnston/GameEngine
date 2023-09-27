@@ -21,7 +21,7 @@ public class GUI extends JFrame {
     public static JPanel uiSpace;
     public static JFrame window;
 
-    public GUI(String backgroundChar){
+    public GUI(String backgroundChar, Color c){
 
         preScreenSpace = new String[GRID_SIZE][GRID_SIZE];
         screenSpace = new JLabel[GRID_SIZE][GRID_SIZE];
@@ -39,7 +39,7 @@ public class GUI extends JFrame {
 
         window.add(uiSpace);
         uiSpace.setSize(DIM,DIM);
-        uiSpace.setBackground(Color.PINK);
+        uiSpace.setBackground(c);
         uiSpace.setVisible(true);
 
         uiSpace.setLayout(null);

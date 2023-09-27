@@ -3,6 +3,7 @@ import com.drake.engine.core.Gameobject;
 import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class MainRunner extends Engine {
@@ -31,8 +32,13 @@ public class MainRunner extends Engine {
         //Player
         Gameobject test = new Gameobject(new Vector2(8,8), new Vector2(1,1), "A", "TEST");
 
+        Gameobject ball = new Gameobject(new Vector2(4, 30), new Vector2(2,2), "B", "ball");
+
         sc.setStatic(false);
         door.setStatic(false);
+        ball.setStatic(true);
+
+        setbColor(Color.GRAY);
         super.init();
     }
 
@@ -41,23 +47,24 @@ public class MainRunner extends Engine {
         Gameobject o = FindGameObject("TEST");
         if(InputHandler.KeyMap.get(KeyEvent.VK_W)){
             //o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
-            o.Move(new Vector2(o.getPos().x, o.getPos().y-1));
+            o.Move(1, Gameobject.Direction.UP);
         }
         if(InputHandler.KeyMap.get(KeyEvent.VK_S)){
-            o.Move(new Vector2(o.getPos().x, o.getPos().y+1));
+            o.Move(1, Gameobject.Direction.DOWN);
         }
         if(InputHandler.KeyMap.get(KeyEvent.VK_A)){
-            o.Move(new Vector2(o.getPos().x-1, o.getPos().y));
+            o.Move(1, Gameobject.Direction.LEFT);
         }
         if(InputHandler.KeyMap.get(KeyEvent.VK_D)){
-            o.Move(new Vector2(o.getPos().x+1, o.getPos().y));
+            o.Move(1, Gameobject.Direction.RIGHT);
         }
         super.HandleInput();
     }
 
     @Override
     public void gameLoop() {
-       // System.out.println("A");
+        Gameobject o = Engine.FindGameObject("ball");
+        o.Move(2, Gameobject.Direction.RIGHT);
         super.gameLoop();
     }
 }

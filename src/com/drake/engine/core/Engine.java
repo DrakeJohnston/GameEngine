@@ -3,6 +3,7 @@ package com.drake.engine.core;
 import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
@@ -11,11 +12,12 @@ public class Engine {
 
     public static ArrayList<Gameobject> objects = new ArrayList<>();
     public static boolean isActive = true;
+    private Color bColor;
 
     public GUI ui;
 
     public void init(){
-        ui = new GUI("0");
+        ui = new GUI("0", bColor);
         gameLoop();
     }
 
@@ -84,4 +86,7 @@ public class Engine {
         return null;
     }
 
+    public void setbColor(Color bColor) {
+        this.bColor = bColor;
+    }
 }
