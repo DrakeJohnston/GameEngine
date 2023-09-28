@@ -5,6 +5,9 @@ import com.drake.engine.core.Engine;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+/*Currently the window helper allows the closing communication between the GUI thread and the
+* Engine thread. Without this the engine wouldn't shut down after the window is closed*/
+
 public class WindowHelper implements WindowListener {
     @Override
     public void windowOpened(WindowEvent e) {

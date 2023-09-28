@@ -1,5 +1,7 @@
 package com.drake.engine.math;
 
+/*A class to handle basic vectors*/
+//TODO: add more vector methods for various utilities
 public class Vector2 {
 
     public int x,y;

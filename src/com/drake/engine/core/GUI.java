@@ -21,6 +21,9 @@ public class GUI extends JFrame {
     public static JPanel uiSpace;
     public static JFrame window;
 
+    /*Setup for the gui window, at the moment the user has no ability to change the gui
+    * Could change in the future but would have to have limitations*/
+    //TODO: Make gui more customizable by users
     public GUI(String backgroundChar, Color c){
 
         preScreenSpace = new String[GRID_SIZE][GRID_SIZE];
@@ -55,41 +58,49 @@ public class GUI extends JFrame {
             }
         }
 
-        JButton b = new JButton();
-        b.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Test");
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-        b.setSize(10,20);
-        b.setVisible(true);
-        b.setLocation(0,0);
-        uiSpace.add(b);
+//        JButton b = new JButton();
+//        b.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                System.out.println("Test");
+//            }
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//
+//            }
+//        });
+//        b.setSize(10,20);
+//        b.setVisible(true);
+//        b.setLocation(0,0);
+//        uiSpace.add(b);
 
         uiSpace.repaint();
     }
 
+    /*Prepares the screen buffer before posting it to the screen*/
+    public void PreparePreScreen(){
+        ClearPreScreen();
+        SetupScreen();
+        UpdateScreen();
+    }
+
+    //resets the pre screen
     public void ClearPreScreen(){
         for(int x = 0; x < preScreenSpace.length; x++){
             for(int y = 0; y < preScreenSpace[0].length; y++){
@@ -98,12 +109,7 @@ public class GUI extends JFrame {
         }
     }
 
-    public void PreparePreScreen(){
-        ClearPreScreen();
-        SetupScreen();
-        UpdateScreen();
-    }
-
+    //adds the gameobject locations and symbols to the pre screen for the next screen uppdate
     private static void SetupScreen() {
         for(Gameobject s : Engine.objects){
             for(int x=s.getPos().x; x < s.getPos().x + s.getSize().x; x++){
@@ -118,6 +124,7 @@ public class GUI extends JFrame {
         }
     }
 
+    //updates the screen from pre screen
     public void UpdateScreen(){
         for(int x = 0; x < GRID_SIZE; x++) {
             for (int y = 0; y < GRID_SIZE; y++) {

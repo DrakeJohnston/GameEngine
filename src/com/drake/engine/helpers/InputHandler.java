@@ -5,6 +5,10 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 
+/*Input handling helper, very inefficient but use able,
+* currently takes input from the gui thread and registers it to a key map that is
+* then used by the engine thread for input*/
+//TODO: Should improve the Input Metod used here
 public class InputHandler implements KeyListener {
 
     /*List of keycodes*/

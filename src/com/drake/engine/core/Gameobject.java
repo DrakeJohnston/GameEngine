@@ -21,6 +21,7 @@ public class Gameobject {
 
     static int lastID = 0;
 
+    /*Constructor for the gameobject*/
     public Gameobject(Vector2 pos, Vector2 size, String symbol, String name){
         this.pos = pos;
         this.symbol = symbol;
@@ -32,6 +33,9 @@ public class Gameobject {
         initGameObject();
     }
 
+    /*
+    * Setup for the gameobject, adding it to the engine list and giving it a unique id
+    * */
     public void initGameObject() {
         id = lastID+1;
         lastID = id;
@@ -39,6 +43,9 @@ public class Gameobject {
         Engine.AddNewObject(this);
     }
 
+    /*used to create the vector array for each part of the general shape of the
+    \game object
+    */
     private void createShape(){
         for(int x=0; x<size.x; x++){
             for(int y=0; y<size.y; y++){
@@ -47,13 +54,9 @@ public class Gameobject {
         }
     }
 
-//    public void Move(Vector2 pos){
-//        if(!CheckForBlocking(pos)){
-//          setPos(pos);
-//        }
-//    }
-
     //TODO: Optimise a lil as the cases can probably be made into one method as they are similar
+
+    //Method to handle the movement of gameobjects, uses collision detection
     public void Move(int amount, Direction d){
         switch (d){
             case UP -> {
@@ -62,7 +65,7 @@ public class Gameobject {
                     if(!o.isStatic){
                         setPos(new Vector2(pos.x, pos.y-amount));
                     }else{
-                        if(amount>0) {
+                        if(amount > 0) {
                             Move(amount - 1, d);
                         }
                     }
@@ -105,7 +108,7 @@ public class Gameobject {
                     if(!o.isStatic){
                         setPos(new Vector2(pos.x-amount, pos.y));
                     }else{
-                        if(amount>0) {
+                        if(amount > 0) {
                             Move(amount - 1, d);
                         }
                     }

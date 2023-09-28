@@ -16,11 +16,21 @@ public class Engine {
 
     public GUI ui;
 
+    /*Init function expected to be overriden to add new functionality on its own
+    * starts the game loop and sets up the gui. Note: use super(bla, bla)
+    * so that the rest of the init function continues
+    * */
     public void init(){
         ui = new GUI("0", bColor);
         gameLoop();
     }
 
+    /*The Main game loop where updates happen, For now an update happens every 100 ms
+    * but a better method will be implemented once found
+    * Again its expected that this will be overridden but do not forget to super
+    * after your code
+    * */
+    //TODO: find a new method of creating a game loop
     public void gameLoop(){
 
         ui.PreparePreScreen();
@@ -36,23 +46,22 @@ public class Engine {
         }
     }
 
+    //Basic input handling using the InputHandler helper class, should be overridden for new functionallity
+    //TODO: improve input system to allow more control
     public void HandleInput() {
         if (InputHandler.KeyMap.get(VK_BACK_SLASH)) {
             System.out.println("debug key! : " + InputHandler.KeyMap.get(VK_BACK_SLASH));
         }
     }
 
-//    private void RenderObjects() {
-//        ui.ClearPreScreen();
-//        for(com.drake.engine.core.Gameobject g : objects){
-//            ui.addToScreen(g.getPos(), g.getSymbol());
-//        }
-//    }
-
+    //Adds a new object to the list
     public static void AddNewObject(Gameobject gameobject){
         objects.add(gameobject);
     }
 
+    /*Below are various ways to find game objects other than having a
+    * static variable with it for cleanliness of code
+    * */
     public static Gameobject FindGameObject(String name){
         for(Gameobject g : objects){
             if(g.getName().equals(name)){
@@ -86,6 +95,7 @@ public class Engine {
         return null;
     }
 
+    //used to allow changing of the background, uses AWT color library
     public void setbColor(Color bColor) {
         this.bColor = bColor;
     }
