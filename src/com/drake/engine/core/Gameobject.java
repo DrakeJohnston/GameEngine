@@ -14,37 +14,38 @@ public class Gameobject {
     private Vector2 pos;
     private String symbol;
     private String name;
+    private int size;
+
     private int RenderOrder;
     private int id = 0;
+    static int lastID = 0;
+
     boolean isActive = true;
-    private Vector2 size;
-    private final Vector2[][] shape;
-
-    //for creating multichar objects
-    public String[][] model;
-
     private boolean isStatic = true;
 
-    static int lastID = 0;
+    private int[][] model;
+    public String[] chars;
+    private final Vector2[][] collisionBox;
 
     private final boolean isEmpty;
     private boolean isParent = false;
     private ArrayList<Gameobject> children = new ArrayList<>();
 
     /*Constructor for the gameobject*/
+    //for empty game objects
     public Gameobject(Vector2 pos, String name){
         this.pos = pos;
         this.name = name;
-        shape = null;
+        collisionBox = null;
         isEmpty = true;
         isStatic = false;
         initGameObject();
     }
-
+    //for empty game objects
     public Gameobject(Vector2 pos, String name, Gameobject[] children){
         this.pos = pos;
         this.name = name;
-        shape = null;
+        collisionBox = null;
         isEmpty = true;
         isStatic = false;
 
@@ -54,35 +55,16 @@ public class Gameobject {
         initGameObject();
     }
 
-    public Gameobject(Vector2 pos, Vector2 size, String symbol, String name){
+    public Gameobject(Vector2 pos, String[] chars, int[][] model, String name){
         this.pos = pos;
-        this.symbol = symbol;
         this.name = name;
-        this.size = size;
-        isEmpty = false;
-        shape = new Vector2[size.x][size.y];
-        RenderOrder = 0;
-        createShape();
-        createModel();
-        initGameObject();
-    }
+        this.isEmpty = false;
+        this.size = model.length;
 
-    private void createModel() {
-        
-    }
+        this.model = model;
+        this.chars = chars;
 
-    public Gameobject(Vector2 pos, Vector2 size, String symbol, String name, Gameobject[] children){
-        this.pos = pos;
-        this.symbol = symbol;
-        this.name = name;
-        this.size = size;
-        isEmpty = false;
-
-        this.children.addAll(Arrays.asList(children));
-        this.isParent = true;
-
-        shape = new Vector2[size.x][size.y];
-        RenderOrder = 0;
+        collisionBox = new Vector2[size][size];
         createShape();
         initGameObject();
     }
@@ -101,9 +83,9 @@ public class Gameobject {
     \game object
     */
     private void createShape(){
-        for(int x=0; x<size.x; x++){
-            for(int y=0; y<size.y; y++){
-                shape[x][y] = new Vector2(getPos().x + x, getPos().y + y);
+        for(int x=0; x<size; x++){
+            for(int y=0; y<size; y++){
+                collisionBox[x][y] = new Vector2(getPos().x + x, getPos().y + y);
             }
         }
     }
@@ -129,9 +111,9 @@ public class Gameobject {
                     }
                 }
                 case DOWN -> {
-                    if (size.y > 1) {
-                        if (Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size.y))) != null) {
-                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size.y)));
+                    if (size > 1) {
+                        if (Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size))) != null) {
+                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size)));
                             if (!o.isStatic) {
                                 setPos(new Vector2(pos.x, pos.y + amount));
                             } else {
@@ -172,9 +154,9 @@ public class Gameobject {
                     }
                 }
                 case RIGHT -> {
-                    if (size.x > 0) {
-                        if (Engine.FindGameObject(new Vector2(pos.x + (amount + size.x), pos.y)) != null) {
-                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x + (amount + size.x), pos.y));
+                    if (size > 0) {
+                        if (Engine.FindGameObject(new Vector2(pos.x + (amount + size), pos.y)) != null) {
+                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x + (amount + size), pos.y));
                             if (!o.isStatic) {
                                 setPos(new Vector2(pos.x + amount, pos.y));
                             } else {
@@ -212,15 +194,15 @@ public class Gameobject {
         return false;
     }
 
-    public Vector2[][] getShape() {
-        return shape;
+    public Vector2[][] getCollisionBox() {
+        return collisionBox;
     }
 
-    public Vector2 getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(Vector2 size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
@@ -309,6 +291,14 @@ public class Gameobject {
         if(children.isEmpty()){
             this.isParent = false;
         }
+    }
+
+    public int[][] getModel() {
+        return model;
+    }
+
+    public void setModel(int[][] model) {
+        this.model = model;
     }
 
     public boolean isEmpty() {

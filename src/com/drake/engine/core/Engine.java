@@ -73,7 +73,7 @@ public class Engine {
 
     public static Gameobject FindGameObject(Vector2 vec){
         for(Gameobject g : objects){
-            Vector2[][] s = g.getShape();
+            Vector2[][] s = g.getCollisionBox();
             for(int x=0; x < s.length; x++){
                 for (int y=0; y < s[0].length; y++){
                     if(s[x][y].CompareTo(vec)){

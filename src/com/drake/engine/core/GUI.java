@@ -96,7 +96,9 @@ public class GUI extends JFrame {
     /*Prepares the screen buffer before posting it to the screen*/
     public void PreparePreScreen(){
         ClearPreScreen();
+
         SetupScreen();
+
         UpdateScreen();
     }
 
@@ -114,22 +116,35 @@ public class GUI extends JFrame {
         for(Gameobject s : Engine.objects) {
             if (s.isActive) {
                 if(!s.isEmpty()) {
-                    for (int x = s.getPos().x; x < s.getPos().x + s.getSize().x; x++) {
-                        for (int y = s.getPos().y; y < s.getPos().y + s.getSize().y; y++) {
+
+                    for (int x = 0; x < s.getSize(); x++) {
+                        for (int y = 0; y < s.getSize(); y++) {
+
                             if (s.getPos().x < GRID_SIZE - 1 && s.getPos().x >= 0) {
                                 if (s.getPos().y < GRID_SIZE - 1 && s.getPos().y >= 0) {
+                                    //looping through the current gameobject's space
                                     RenderObject(s, x, y);
                                 }
                             }
+
                         }
                     }
+
                 }
             }
         }
     }
 
     private static void RenderObject(Gameobject s, int x, int y) {
-        preScreenSpace[x][y] = s.model[x][y];
+
+        //System.out.println(s.getName() + " " + x);
+        int key = s.getModel()[x][y];
+        String keyChar = s.chars[key];
+
+        int locationX = x+s.getPos().x;
+        int locationY = y+s.getPos().y;
+
+        preScreenSpace[locationX][locationY] = keyChar;
         //preScreenSpace[x][y] = s.getSymbol();
     }
 

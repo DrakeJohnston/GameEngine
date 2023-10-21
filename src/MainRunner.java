@@ -8,6 +8,16 @@ import java.awt.event.KeyEvent;
 
 public class MainRunner extends Engine {
 
+    public static int[][] playerModel = {{0}};
+    public static int[][] scModel = {
+            {0,0,0,0,0},
+            {0,1,1,1,0},
+            {0,1,1,1,0},
+            {0,1,1,1,0},
+            {0,0,0,0,0}};
+    public static int[][] doorModel = {{0,0},{0,0}};
+    public static int[][] ballModel = {{0,0},{0,0}};
+
     public static void main(String[] args) {
         MainRunner m = new MainRunner();
         m.init();
@@ -16,25 +26,16 @@ public class MainRunner extends Engine {
     @Override
     public void init() {
         //Other
-        Gameobject sc = new Gameobject(new Vector2(5,5), new Vector2(5,5), "|", "sc");
-        Gameobject sc2 = new Gameobject(new Vector2(9,9), new Vector2(5,5), "|", "sc");
+        Gameobject sc = new Gameobject(new Vector2(5,5), new String[]{"w", "-"}, scModel, "sc");
+        Gameobject door = new Gameobject(new Vector2(47,5), new String[]{"D"}, doorModel, "door");
 
-        Gameobject door = new Gameobject(new Vector2(47,5), new Vector2(1,2), "D", "door");
-        Gameobject doorp2 = new Gameobject(new Vector2(47,7), new Vector2(1,1), "~", "door");
-        Gameobject doorp3 = new Gameobject(new Vector2(47,4), new Vector2(1,1), "~", "door");
-
-        //Walls
-        Gameobject sc3 = new Gameobject(new Vector2(0,0), new Vector2(50,2), "|", "sc");
-        Gameobject sc4 = new Gameobject(new Vector2(0,0), new Vector2(2,50), "|", "sc");
-        Gameobject sc5 = new Gameobject(new Vector2(0,48), new Vector2(50,2), "|", "sc");
-        Gameobject sc6 = new Gameobject(new Vector2(48,0), new Vector2(2,50), "|", "sc");
 
         //Player
-        Gameobject test = new Gameobject(new Vector2(8,8), new Vector2(1,1), "A", "TEST");
+        Gameobject test = new Gameobject(new Vector2(8,8), new String[]{"A"}, playerModel, "TEST");
 
-        Gameobject ball = new Gameobject(new Vector2(4, 30), new Vector2(2,2), "B", "ball");
+        Gameobject ball = new Gameobject(new Vector2(4, 30), new String[]{"B"}, ballModel, "ball");
 
-        sc.setStatic(false);
+        sc.setStatic(true);
         door.setStatic(false);
         ball.setStatic(true);
 
