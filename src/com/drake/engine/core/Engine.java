@@ -95,6 +95,28 @@ public class Engine {
         return null;
     }
 
+    public static Gameobject[] FindGameObjects(int[] ids){
+        ArrayList<Gameobject> ret = new ArrayList<>();
+        for(int i=0; i < ids.length; i++){
+            Gameobject g = Engine.FindGameObject(ids[i]);
+            if(g!=null){
+                ret.add(g);
+            }
+        }
+        return ret.toArray(Gameobject[]::new);
+    }
+
+    public static Gameobject[] FindGameObjects(Vector2[] positions){
+        ArrayList<Gameobject> ret = new ArrayList<>();
+        for(int i=0; i < positions.length; i++){
+            Gameobject g = Engine.FindGameObject(positions[i]);
+            if(g!=null){
+                ret.add(g);
+            }
+        }
+        return ret.toArray(Gameobject[]::new);
+    }
+
     //used to allow changing of the background, uses AWT color library
     public void setbColor(Color bColor) {
         this.bColor = bColor;

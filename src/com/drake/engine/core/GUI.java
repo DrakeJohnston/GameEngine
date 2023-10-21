@@ -111,17 +111,26 @@ public class GUI extends JFrame {
 
     //adds the gameobject locations and symbols to the pre screen for the next screen uppdate
     private static void SetupScreen() {
-        for(Gameobject s : Engine.objects){
-            for(int x=s.getPos().x; x < s.getPos().x + s.getSize().x; x++){
-                for(int y=s.getPos().y; y < s.getPos().y + s.getSize().y; y++){
-                    if(s.getPos().x < GRID_SIZE-1 && s.getPos().x >= 0) {
-                        if(s.getPos().y < GRID_SIZE-1 && s.getPos().y >= 0) {
-                            preScreenSpace[x][y] = s.getSymbol();
+        for(Gameobject s : Engine.objects) {
+            if (s.isActive) {
+                if(!s.isEmpty()) {
+                    for (int x = s.getPos().x; x < s.getPos().x + s.getSize().x; x++) {
+                        for (int y = s.getPos().y; y < s.getPos().y + s.getSize().y; y++) {
+                            if (s.getPos().x < GRID_SIZE - 1 && s.getPos().x >= 0) {
+                                if (s.getPos().y < GRID_SIZE - 1 && s.getPos().y >= 0) {
+                                    RenderObject(s, x, y);
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private static void RenderObject(Gameobject s, int x, int y) {
+        preScreenSpace[x][y] = s.model[x][y];
+        //preScreenSpace[x][y] = s.getSymbol();
     }
 
     //updates the screen from pre screen

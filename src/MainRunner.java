@@ -58,6 +58,12 @@ public class MainRunner extends Engine {
         if(InputHandler.KeyMap.get(KeyEvent.VK_D)){
             o.Move(1, Gameobject.Direction.RIGHT);
         }
+        if(InputHandler.KeyMap.get(KeyEvent.VK_P)){
+            Gameobject[] go = Engine.FindGameObjects(new int[]{1, 2, 3});
+            for(Gameobject g : go){
+                System.out.println("Names: "+g.getName());
+            }
+        }
         super.HandleInput();
     }
 
