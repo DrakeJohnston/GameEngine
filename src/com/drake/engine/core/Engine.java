@@ -74,10 +74,12 @@ public class Engine {
     public static Gameobject FindGameObject(Vector2 vec){
         for(Gameobject g : objects){
             Vector2[][] s = g.getCollisionBox();
-            for(int x=0; x < s.length; x++){
-                for (int y=0; y < s[0].length; y++){
-                    if(s[x][y].CompareTo(vec)){
-                        return g;
+            if(g.isActive && !g.isEmpty()) {
+                for (int x = 0; x < s.length; x++) {
+                    for (int y = 0; y < s[0].length; y++) {
+                        if (s[x][y].CompareTo(vec)) {
+                            return g;
+                        }
                     }
                 }
             }
@@ -88,8 +90,10 @@ public class Engine {
 
     public static Gameobject FindGameObject(int id){
         for(Gameobject g : objects){
-            if(g.getID() == id){
-                return g;
+            if(g.isActive && !g.isEmpty()) {
+                if (g.getID() == id) {
+                    return g;
+                }
             }
         }
         return null;
