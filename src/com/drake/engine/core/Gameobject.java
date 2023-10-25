@@ -21,7 +21,7 @@ public class Gameobject {
     static int lastID = 0;
 
     boolean isActive = true;
-    private boolean isStatic = true;
+    private boolean isStatic = false;
 
     private int[][] model;
     public String[] chars;

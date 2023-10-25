@@ -1,5 +1,6 @@
 package com.drake.engine.core;
 
+import com.drake.engine.core.UI.UIElement;
 import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
 
@@ -11,7 +12,9 @@ import static java.awt.event.KeyEvent.*;
 public class Engine {
 
     public static ArrayList<Gameobject> objects = new ArrayList<>();
+    public static ArrayList<UIElement> uio = new ArrayList<>();
     public static boolean isActive = true;
+    public static boolean debugGrid = false;
     private Color bColor;
 
     public GUI ui;
@@ -119,6 +122,10 @@ public class Engine {
             }
         }
         return ret.toArray(Gameobject[]::new);
+    }
+
+    public static void changeBGChar(String s){
+        GUI.setBgChar(s);
     }
 
     //used to allow changing of the background, uses AWT color library

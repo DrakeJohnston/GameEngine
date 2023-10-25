@@ -1,18 +1,16 @@
 package com.drake.engine.core;
 
-import com.drake.engine.math.Vector2;
+import com.drake.engine.core.UI.UIElement;
 import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.helpers.WindowHelper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 public class GUI extends JFrame {
     public static int DIM = 600;
     public static int GRID_SIZE = 50;
+    private static String bgChar = "0";
 
     public static String[][] preScreenSpace;
     public static JLabel[][] screenSpace;
@@ -97,7 +95,8 @@ public class GUI extends JFrame {
     public void PreparePreScreen(){
         ClearPreScreen();
 
-        SetupScreen();
+        SetupScreenObjects();
+        SetupScreenUIE();
 
         UpdateScreen();
     }
@@ -106,13 +105,25 @@ public class GUI extends JFrame {
     public void ClearPreScreen(){
         for(int x = 0; x < preScreenSpace.length; x++){
             for(int y = 0; y < preScreenSpace[0].length; y++){
-                preScreenSpace[x][y] = "'";
+                preScreenSpace[x][y] = bgChar;
+            }
+        }
+    }
+
+    private void SetupScreenUIE() {
+        for(UIElement e : Engine.uio){
+            if(e.isActive()){
+                char[] chars = e.getText().toCharArray();
+                //System.out.println(chars.length);
+                for(int i=0; i < chars.length; i++){
+                    preScreenSpace[i+e.getPos().x][e.getPos().y] = String.valueOf(chars[i]);
+                }
             }
         }
     }
 
     //adds the gameobject locations and symbols to the pre screen for the next screen uppdate
-    private static void SetupScreen() {
+    private static void SetupScreenObjects() {
         for(Gameobject s : Engine.objects) {
             if (s.isActive) {
                 if(!s.isEmpty()) {
@@ -160,5 +171,13 @@ public class GUI extends JFrame {
             }
         }
         uiSpace.repaint();
+    }
+
+    public static String getBgChar() {
+        return bgChar;
+    }
+
+    public static void setBgChar(String bgChar) {
+        GUI.bgChar = bgChar;
     }
 }

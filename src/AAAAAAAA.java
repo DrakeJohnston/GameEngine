@@ -1,19 +1,21 @@
 import com.drake.engine.core.Engine;
 import com.drake.engine.core.Gameobject;
+import com.drake.engine.core.UI.Canvas;
+import com.drake.engine.core.UI.UIElement;
 import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class AAAAAAAA extends Engine {
     public Gameobject.Direction direction;
 
     public static Gameobject game = new Gameobject(new Vector2(0,0), "root");
-    public static Gameobject player = new Gameobject(new Vector2(5,5), new String[]{"@"}, Models.PlayerModel, "Player");
+    public static Gameobject player = new Gameobject(new Vector2(5,5), new String[]{"S"}, Models.PlayerModel, "Player");
 
-    public static Gameobject mainmenu = new Gameobject(new Vector2(0,0), "root");
-    public static  Gameobject title_s = new Gameobject(new Vector2(5,8), new String[]{"s", "n", "a", "k", "e"}, Models.titleModelS, "Title_s");
-    public static  Gameobject title_g = new Gameobject(new Vector2(5,5), new String[]{"g", "a", "m", "e"}, Models.titleModelG, "Title_g");
+    public static Canvas mainCanvas = new Canvas(new ArrayList<>());
+    public static UIElement title_s = new UIElement(new Vector2(5,8), "Test");
 
     public static void main(String[] args) {
         System.out.println("Hello world!");
@@ -24,12 +26,12 @@ public class AAAAAAAA extends Engine {
     @Override
     public void init() {
         direction = Gameobject.Direction.UP;
+        Engine.changeBGChar("-");
         game.addChild(player);
 
-        mainmenu.addChild(title_s);
-        mainmenu.addChild(title_g);
+        mainCanvas.addElement(title_s);
+        mainCanvas.setActive(false);
 
-        mainmenu.setActive(false);
         super.init();
     }
 
@@ -53,7 +55,7 @@ public class AAAAAAAA extends Engine {
 
         if(InputHandler.KeyMap.get(KeyEvent.VK_ESCAPE)){
             game.setActive(false);
-            mainmenu.setActive(true);
+            mainCanvas.setActive(true);
         }
 
         super.HandleInput();
