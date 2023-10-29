@@ -1,8 +1,10 @@
 package com.drake.engine.core;
 
+import com.drake.engine.MusicHandler;
 import com.drake.engine.core.UI.UIElement;
 import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
+import jm.music.data.Phrase;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,6 +18,10 @@ public class Engine {
     public static boolean isActive = true;
     public static boolean debugGrid = false;
     private Color bColor;
+
+    public static ArrayList<Phrase> songs = new ArrayList<>();
+    public static ArrayList<MusicHandler> musicInstances = new ArrayList<>();
+    public static ArrayList<Thread> musicThreads = new ArrayList<>();
 
     public GUI ui;
 
@@ -44,9 +50,38 @@ public class Engine {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         if(isActive) {
             gameLoop();
+        }else {
+            for(MusicHandler m : musicInstances){
+                m.setActive(false);
+            }
+            for(Thread t : musicThreads){
+                t.interrupt();
+            }
         }
+    }
+
+    public static void PlaySongFromList(int num, boolean playOnce){
+        MusicHandler m = new MusicHandler(songs.get(num), playOnce);
+        Thread t = new Thread(m);
+        musicThreads.add(t);
+        t.start();
+    }
+
+    public static void PlaySong(Phrase p, boolean playOnce){
+        MusicHandler m = new MusicHandler(p, playOnce);
+        Thread t = new Thread(m);
+        musicThreads.add(t);
+        t.start();
+    }
+
+    public static void PlaySong(int[] pitches, double rythym, boolean playOnce){
+        MusicHandler m = new MusicHandler(pitches, rythym, playOnce);
+        Thread t = new Thread(m);
+        musicThreads.add(t);
+        t.start();
     }
 
     //Basic input handling using the InputHandler helper class, should be overridden for new functionallity
@@ -131,5 +166,13 @@ public class Engine {
     //used to allow changing of the background, uses AWT color library
     public void setbColor(Color bColor) {
         this.bColor = bColor;
+    }
+
+    public ArrayList<Phrase> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(ArrayList<Phrase> songs) {
+        this.songs = songs;
     }
 }

@@ -1,9 +1,12 @@
+import com.drake.engine.MusicHandler;
 import com.drake.engine.core.Engine;
 import com.drake.engine.core.Gameobject;
 import com.drake.engine.core.UI.Canvas;
 import com.drake.engine.core.UI.UIElement;
 import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
+import jm.JMC;
+import jm.music.data.Phrase;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class AAAAAAAA extends Engine {
         direction = Gameobject.Direction.UP;
         Engine.changeBGChar("-");
         game.addChild(player);
+
+        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1};
+        Engine.PlaySong(p, JMC.HALF_NOTE, false);
 
         mainCanvas.addElement(title_s);
         mainCanvas.setActive(false);
