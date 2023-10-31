@@ -1,3 +1,4 @@
+import com.drake.engine.GameFileManager;
 import com.drake.engine.MusicHandler;
 import com.drake.engine.core.Engine;
 import com.drake.engine.core.Gameobject;
@@ -32,8 +33,15 @@ public class AAAAAAAA extends Engine {
         Engine.changeBGChar("-");
         game.addChild(player);
 
-        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1};
-        Engine.PlaySong(p, JMC.HALF_NOTE, false);
+        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
+        Phrase ph = MusicHandler.CreateRandomPhrase(5, 10);
+        Engine.PlaySong(ph, false);
+        //Engine.PlaySong(p, JMC.HALF_NOTE, false);
+
+        GameFileManager.LoadData(GameFileManager.getSaveLocation()+"SAVEFILE.sgam");
+        System.out.println(GameFileManager.GetData("E") + " Dis the data!!!");
+        //int test = GameFileManager.GetData("E");
+        GameFileManager.SaveInteger("E", 55);
 
         mainCanvas.addElement(title_s);
         mainCanvas.setActive(false);
@@ -65,6 +73,12 @@ public class AAAAAAAA extends Engine {
         }
 
         super.HandleInput();
+    }
+
+    @Override
+    public void OnGameExit() {
+        GameFileManager.SaveData("SAVEFILE");
+        super.OnGameExit();
     }
 
     @Override

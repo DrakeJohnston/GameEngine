@@ -6,6 +6,8 @@ import jm.music.data.*;
 import jm.music.tools.*;
 import jm.util.*;
 
+import java.util.Random;
+
 public class MusicHandler implements Runnable {
 
     Phrase phrase;
@@ -22,6 +24,31 @@ public class MusicHandler implements Runnable {
         phrase = p;
         isOneshot = oneshot;
         Engine.musicInstances.add(this);
+    }
+
+    public static Phrase CreateRandomPhrase(int length, int upperPitch, int upperRhythm){
+        Phrase ph = new Phrase();
+
+        for(int i=0; i< length; i++)
+        {
+            Random rand = new Random();
+            int pitch = rand.nextInt(upperPitch);
+            int rhythm = rand.nextInt(upperRhythm);
+            ph.add(new Note(pitch, rhythm));
+        }
+        return ph;
+    }
+    public static Phrase CreateRandomPhrase(int length, int upperPitch){
+        Phrase ph = new Phrase();
+
+        for(int i=0; i< length; i++)
+        {
+            Random rand = new Random();
+            int pitch = rand.nextInt(upperPitch);
+            int rhythm = rand.nextInt(4);
+            ph.add(new Note(pitch, rhythm));
+        }
+        return ph;
     }
 
     public void PlayCurrentPhraseOneshot(){

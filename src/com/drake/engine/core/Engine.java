@@ -1,5 +1,6 @@
 package com.drake.engine.core;
 
+import com.drake.engine.GameFileManager;
 import com.drake.engine.MusicHandler;
 import com.drake.engine.core.UI.UIElement;
 import com.drake.engine.helpers.InputHandler;
@@ -7,6 +8,7 @@ import com.drake.engine.math.Vector2;
 import jm.music.data.Phrase;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
@@ -31,6 +33,7 @@ public class Engine {
     * */
     public void init(){
         ui = new GUI("0", bColor);
+        new File("./data").mkdir();
         gameLoop();
     }
 
@@ -54,12 +57,16 @@ public class Engine {
         if(isActive) {
             gameLoop();
         }else {
-            for(MusicHandler m : musicInstances){
-                m.setActive(false);
-            }
-            for(Thread t : musicThreads){
-                t.interrupt();
-            }
+            OnGameExit();
+        }
+    }
+
+    public void OnGameExit() {
+        for(MusicHandler m : musicInstances){
+            m.setActive(false);
+        }
+        for(Thread t : musicThreads){
+            t.interrupt();
         }
     }
 
@@ -175,4 +182,5 @@ public class Engine {
     public void setSongs(ArrayList<Phrase> songs) {
         this.songs = songs;
     }
+
 }
