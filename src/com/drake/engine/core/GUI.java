@@ -56,37 +56,6 @@ public class GUI extends JFrame {
             }
         }
 
-//        JButton b = new JButton();
-//        b.addMouseListener(new MouseListener() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                System.out.println("Test");
-//            }
-//
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseReleased(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//
-//            }
-//        });
-//        b.setSize(10,20);
-//        b.setVisible(true);
-//        b.setLocation(0,0);
-//        uiSpace.add(b);
 
         uiSpace.repaint();
     }

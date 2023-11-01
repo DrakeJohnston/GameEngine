@@ -1,5 +1,7 @@
 package com.drake.engine;
 
+import com.drake.engine.math.Vector2;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -30,6 +32,14 @@ public class GameFileManager {
     public static void SaveBoolean(String varName, boolean value){
         data.put(varName, String.valueOf(value));
     }
+
+//    public static void SaveVector(String name, Vector2 vec){
+//        int x = vec.x;
+//        int y = vec.y;
+//
+//        String str = new String(x + "," + y);
+//        data.put(name, str);
+//    }
 
     public static void SaveData(String fileName){
         File file = new File(SaveLocation+fileName+fileExtension);

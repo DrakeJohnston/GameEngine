@@ -34,7 +34,7 @@ public class AAAAAAAA extends Engine {
         game.addChild(player);
 
         int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
-        Phrase ph = MusicHandler.CreateRandomPhrase(5, 10);
+        Phrase ph = MusicHandler.CreateRandomPhrase(5, 20, 10);
         Engine.PlaySong(ph, false);
         //Engine.PlaySong(p, JMC.HALF_NOTE, false);
 
