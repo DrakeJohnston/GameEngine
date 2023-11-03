@@ -34,7 +34,13 @@ public class Renderer {
         uiSpace.repaint();
     }
 
-    public void addToRenderList(Gameobject obj){
+    private static void addToRenderList(Gameobject obj){
         Screen.AddToScreen(obj.getPos(), obj.getSprite());
+    }
+
+    public static void UpdateScreen(){
+        for(Gameobject o : Engine.objects){
+            addToRenderList(o);
+        }
     }
 }

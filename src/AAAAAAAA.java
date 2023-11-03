@@ -9,17 +9,22 @@ import com.drake.engine.math.Vector2;
 import jm.JMC;
 import jm.music.data.Phrase;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AAAAAAAA extends Engine {
     public Gameobject.Direction direction;
 
-    public static Gameobject game = new Gameobject(new Vector2(0,0), "root");
-    public static Gameobject player = new Gameobject(new Vector2(5,5), new String[]{"S"}, Models.PlayerModel, "Player");
-
-    public static Canvas mainCanvas = new Canvas(new ArrayList<>());
-    public static UIElement title_s = new UIElement(new Vector2(5,8), "Test");
+//    public static Gameobject game = new Gameobject(new Vector2(0,0), "root");
+//    public static Gameobject player = new Gameobject(new Vector2(5,5), new String[]{"S"}, Models.PlayerModel, "Player");
+//
+//    public static Canvas mainCanvas = new Canvas(new ArrayList<>());
+//    public static UIElement title_s = new UIElement(new Vector2(5,8), "Test");
 
     public static void main(String[] args) {
         System.out.println("Hello world!");
@@ -31,60 +36,65 @@ public class AAAAAAAA extends Engine {
     public void init() {
         direction = Gameobject.Direction.UP;
         Engine.changeBGChar("-");
-        game.addChild(player);
+        //game.addChild(player);
 
-        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
-        Phrase ph = MusicHandler.CreateRandomPhrase(5, 20, 10);
-        Engine.PlaySong(ph, false);
-        //Engine.PlaySong(p, JMC.HALF_NOTE, false);
+//        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
+//        Phrase ph = MusicHandler.CreateRandomPhrase(5, 20, 10);
+//        Engine.PlaySong(ph, false);
+//        Engine.PlaySong(p, JMC.HALF_NOTE, false);
 
-        GameFileManager.LoadData(GameFileManager.getSaveLocation()+"SAVEFILE.sgam");
-        System.out.println(GameFileManager.GetData("E") + " Dis the data!!!");
-        //int test = GameFileManager.GetData("E");
-        GameFileManager.SaveInteger("E", 55);
+//        GameFileManager.LoadData(GameFileManager.getSaveLocation()+"SAVEFILE.sgam");
+//        System.out.println(GameFileManager.GetData("E") + " Dis the data!!!");
+//        int test = GameFileManager.GetData("E");
+//        GameFileManager.SaveInteger("E", 55);
 
-        mainCanvas.addElement(title_s);
-        mainCanvas.setActive(false);
-
+        //mainCanvas.addElement(title_s);
+        //mainCanvas.setActive(false);
+        try {
+            Image im = ImageIO.read(new File("src/Resources/Link.jpg"));
+            Gameobject test = new Gameobject(new Vector2(5,5), im, 5, "Test");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
         super.init();
     }
 
     @Override
     public void HandleInput() {
-        if(game.getActive()){
-            if(InputHandler.KeyMap.get(KeyEvent.VK_W)){
-                direction = Gameobject.Direction.UP;
-            }
-            if(InputHandler.KeyMap.get(KeyEvent.VK_A)){
-                direction = Gameobject.Direction.LEFT;
-            }
-            if(InputHandler.KeyMap.get(KeyEvent.VK_S)){
-                direction = Gameobject.Direction.DOWN;
-            }
-            if(InputHandler.KeyMap.get(KeyEvent.VK_D)){
-                direction = Gameobject.Direction.RIGHT;
-                //System.out.println("Test");
-            }
-        }
-
-        if(InputHandler.KeyMap.get(KeyEvent.VK_ESCAPE)){
-            game.setActive(false);
-            mainCanvas.setActive(true);
-        }
+//        if(game.getActive()){
+//            if(InputHandler.KeyMap.get(KeyEvent.VK_W)){
+//                direction = Gameobject.Direction.UP;
+//            }
+//            if(InputHandler.KeyMap.get(KeyEvent.VK_A)){
+//                direction = Gameobject.Direction.LEFT;
+//            }
+//            if(InputHandler.KeyMap.get(KeyEvent.VK_S)){
+//                direction = Gameobject.Direction.DOWN;
+//            }
+//            if(InputHandler.KeyMap.get(KeyEvent.VK_D)){
+//                direction = Gameobject.Direction.RIGHT;
+//                //System.out.println("Test");
+//            }
+//        }
+//
+//        if(InputHandler.KeyMap.get(KeyEvent.VK_ESCAPE)){
+//            game.setActive(false);
+//            mainCanvas.setActive(true);
+//        }
 
         super.HandleInput();
     }
 
     @Override
     public void OnGameExit() {
-        GameFileManager.SaveData("SAVEFILE");
+        //GameFileManager.SaveData("SAVEFILE");
         super.OnGameExit();
     }
 
     @Override
     public void gameLoop() {
 
-        player.Move(1, direction);
+        //player.Move(1, direction);
 
         super.gameLoop();
     }

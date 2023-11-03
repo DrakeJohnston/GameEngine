@@ -46,7 +46,7 @@ public class Engine {
     //TODO: find a new method of creating a game loop
     public void gameLoop(){
 
-        //ui.PreparePreScreen();
+        Renderer.UpdateScreen();
         HandleInput();
 
         try {
@@ -117,22 +117,18 @@ public class Engine {
         return null;
     }
 
-//    public static Gameobject FindGameObject(Vector2 vec){
-//        for(Gameobject g : objects){
-//            Vector2[][] s = g.getCollisionBox();
-//            if(g.isActive && !g.isEmpty()) {
-//                for (int x = 0; x < s.length; x++) {
-//                    for (int y = 0; y < s[0].length; y++) {
-//                        if (s[x][y].CompareTo(vec)) {
-//                            return g;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        return null;
-//    }
+    public static Gameobject FindGameObject(Vector2 vec){
+        for(Gameobject g : objects){
+            if(g.isActive && !g.isEmpty()) {
+                Gameobject f = g.getPos() == vec ? g : null;
+                if(f != null){
+                    return f;
+                }
+            }
+        }
+
+        return null;
+    }
 
     public static Gameobject FindGameObject(int id){
         for(Gameobject g : objects){
@@ -156,19 +152,19 @@ public class Engine {
         return ret.toArray(Gameobject[]::new);
     }
 
-//    public static Gameobject[] FindGameObjects(Vector2[] positions){
-//        ArrayList<Gameobject> ret = new ArrayList<>();
-//        for(int i=0; i < positions.length; i++){
-//            Gameobject g = Engine.FindGameObject(positions[i]);
-//            if(g!=null){
-//                ret.add(g);
-//            }
-//        }
-//        return ret.toArray(Gameobject[]::new);
-//    }
+    public static Gameobject[] FindGameObjects(Vector2[] positions){
+        ArrayList<Gameobject> ret = new ArrayList<>();
+        for(int i=0; i < positions.length; i++){
+            Gameobject g = Engine.FindGameObject(positions[i]);
+            if(g!=null){
+                ret.add(g);
+            }
+        }
+        return ret.toArray(Gameobject[]::new);
+    }
 
     public static void changeBGChar(String s){
-        GUI.setBgChar(s);
+
     }
 
     //used to allow changing of the background, uses AWT color library
