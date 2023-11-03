@@ -2,17 +2,29 @@ package com.drake.engine.core;
 
 import com.drake.engine.math.Vector2;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Gameobject {
+
+    public Image getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(Image sprite) {
+        this.sprite = sprite;
+    }
 
     public static enum Direction{
         UP,DOWN,LEFT,RIGHT
     }
 
     private Vector2 pos;
-    private String symbol;
+    //private String symbol;
+    //_______________NEW AREA_____________________________
+    private Image sprite;
+    //___________________________________________________
     private String name;
     private int size;
 
@@ -23,9 +35,9 @@ public class Gameobject {
     boolean isActive = true;
     private boolean isStatic = false;
 
-    private int[][] model;
-    public String[] chars;
-    private final Vector2[][] collisionBox;
+//    private int[][] model;
+//    public String[] chars;
+//    private final Vector2[][] collisionBox;
 
     private final boolean isEmpty;
     private boolean isParent = false;
@@ -36,7 +48,6 @@ public class Gameobject {
     public Gameobject(Vector2 pos, String name){
         this.pos = pos;
         this.name = name;
-        collisionBox = null;
         isEmpty = true;
         isStatic = false;
         initGameObject();
@@ -45,7 +56,6 @@ public class Gameobject {
     public Gameobject(Vector2 pos, String name, Gameobject[] children){
         this.pos = pos;
         this.name = name;
-        collisionBox = null;
         isEmpty = true;
         isStatic = false;
 
@@ -55,17 +65,13 @@ public class Gameobject {
         initGameObject();
     }
 
-    public Gameobject(Vector2 pos, String[] chars, int[][] model, String name){
+    public Gameobject(Vector2 pos, Image sprite, int size, String name){
         this.pos = pos;
         this.name = name;
         this.isEmpty = false;
-        this.size = model.length;
+        this.size = size;
 
-        this.model = model;
-        this.chars = chars;
-
-        collisionBox = new Vector2[size][size];
-        createShape();
+        //createShape();
         initGameObject();
     }
 
@@ -82,13 +88,13 @@ public class Gameobject {
     /*used to create the vector array for each part of the general shape of the
     \game object
     */
-    private void createShape(){
-        for(int x=0; x<size; x++){
-            for(int y=0; y<size; y++){
-                collisionBox[x][y] = new Vector2(getPos().x + x, getPos().y + y);
-            }
-        }
-    }
+//    private void createShape(){
+//        for(int x=0; x<size; x++){
+//            for(int y=0; y<size; y++){
+//                collisionBox[x][y] = new Vector2(getPos().x + x, getPos().y + y);
+//            }
+//        }
+//    }
 
     //TODO: Optimise a lil as the cases can probably be made into one method as they are similar
 
@@ -194,9 +200,9 @@ public class Gameobject {
         return false;
     }
 
-    public Vector2[][] getCollisionBox() {
-        return collisionBox;
-    }
+//    public Vector2[][] getCollisionBox() {
+//        return collisionBox;
+//    }
 
     public int getSize() {
         return size;
@@ -241,13 +247,13 @@ public class Gameobject {
         this.pos = pos;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
+//    public String getSymbol() {
+//        return symbol;
+//    }
+//
+//    public void setSymbol(String symbol) {
+//        this.symbol = symbol;
+//    }
 
     public String getName() {
         return name;
@@ -293,13 +299,13 @@ public class Gameobject {
         }
     }
 
-    public int[][] getModel() {
-        return model;
-    }
-
-    public void setModel(int[][] model) {
-        this.model = model;
-    }
+//    public int[][] getModel() {
+//        return model;
+//    }
+//
+//    public void setModel(int[][] model) {
+//        this.model = model;
+//    }
 
     public boolean isEmpty() {
         return isEmpty;

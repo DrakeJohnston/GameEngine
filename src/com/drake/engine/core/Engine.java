@@ -21,18 +21,19 @@ public class Engine {
     public static boolean debugGrid = false;
     private Color bColor;
 
+    //todo: Engine probably shouldnt be handling this much music handling
     public static ArrayList<Phrase> songs = new ArrayList<>();
     public static ArrayList<MusicHandler> musicInstances = new ArrayList<>();
     public static ArrayList<Thread> musicThreads = new ArrayList<>();
 
-    public GUI ui;
+    public Renderer ui;
 
     /*Init function expected to be overriden to add new functionality on its own
     * starts the game loop and sets up the gui. Note: use super(bla, bla)
     * so that the rest of the init function continues
     * */
     public void init(){
-        ui = new GUI("0", bColor);
+        ui = new Renderer(bColor, 600,600);
         new File("./data").mkdir();
         gameLoop();
     }
@@ -45,7 +46,7 @@ public class Engine {
     //TODO: find a new method of creating a game loop
     public void gameLoop(){
 
-        ui.PreparePreScreen();
+        //ui.PreparePreScreen();
         HandleInput();
 
         try {
@@ -116,22 +117,22 @@ public class Engine {
         return null;
     }
 
-    public static Gameobject FindGameObject(Vector2 vec){
-        for(Gameobject g : objects){
-            Vector2[][] s = g.getCollisionBox();
-            if(g.isActive && !g.isEmpty()) {
-                for (int x = 0; x < s.length; x++) {
-                    for (int y = 0; y < s[0].length; y++) {
-                        if (s[x][y].CompareTo(vec)) {
-                            return g;
-                        }
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
+//    public static Gameobject FindGameObject(Vector2 vec){
+//        for(Gameobject g : objects){
+//            Vector2[][] s = g.getCollisionBox();
+//            if(g.isActive && !g.isEmpty()) {
+//                for (int x = 0; x < s.length; x++) {
+//                    for (int y = 0; y < s[0].length; y++) {
+//                        if (s[x][y].CompareTo(vec)) {
+//                            return g;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        return null;
+//    }
 
     public static Gameobject FindGameObject(int id){
         for(Gameobject g : objects){
@@ -155,16 +156,16 @@ public class Engine {
         return ret.toArray(Gameobject[]::new);
     }
 
-    public static Gameobject[] FindGameObjects(Vector2[] positions){
-        ArrayList<Gameobject> ret = new ArrayList<>();
-        for(int i=0; i < positions.length; i++){
-            Gameobject g = Engine.FindGameObject(positions[i]);
-            if(g!=null){
-                ret.add(g);
-            }
-        }
-        return ret.toArray(Gameobject[]::new);
-    }
+//    public static Gameobject[] FindGameObjects(Vector2[] positions){
+//        ArrayList<Gameobject> ret = new ArrayList<>();
+//        for(int i=0; i < positions.length; i++){
+//            Gameobject g = Engine.FindGameObject(positions[i]);
+//            if(g!=null){
+//                ret.add(g);
+//            }
+//        }
+//        return ret.toArray(Gameobject[]::new);
+//    }
 
     public static void changeBGChar(String s){
         GUI.setBgChar(s);
