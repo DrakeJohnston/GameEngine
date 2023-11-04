@@ -3,6 +3,7 @@ package com.drake.engine.core;
 import com.drake.engine.math.Vector2;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,7 +13,7 @@ public class Gameobject {
         return sprite;
     }
 
-    public void setSprite(Image sprite) {
+    public void setSprite(BufferedImage sprite) {
         this.sprite = sprite;
     }
 
@@ -23,7 +24,7 @@ public class Gameobject {
     private Vector2 pos;
     //private String symbol;
     //_______________NEW AREA_____________________________
-    private Image sprite;
+    private BufferedImage sprite;
     //___________________________________________________
     private String name;
     private int size;
@@ -65,11 +66,13 @@ public class Gameobject {
         initGameObject();
     }
 
-    public Gameobject(Vector2 pos, Image sprite, int size, String name){
+    public Gameobject(Vector2 pos, BufferedImage sprite, int size, String name){
         this.pos = pos;
         this.name = name;
         this.isEmpty = false;
         this.size = size;
+
+        this.sprite = sprite;
 
         //createShape();
         initGameObject();

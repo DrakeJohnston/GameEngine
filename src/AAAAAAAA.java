@@ -51,7 +51,7 @@ public class AAAAAAAA extends Engine {
         //mainCanvas.addElement(title_s);
         //mainCanvas.setActive(false);
         try {
-            Image im = ImageIO.read(new File("src/Resources/Link.jpg"));
+            BufferedImage im = ImageIO.read(new File("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\SpriteTest2.png"));
             Gameobject test = new Gameobject(new Vector2(5,5), im, 5, "Test");
         }catch (IOException e) {
             e.printStackTrace();
