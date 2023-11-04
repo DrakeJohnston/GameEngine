@@ -1,10 +1,4 @@
 import com.drake.engine.core.Engine;
-import com.drake.engine.core.Gameobject;
-import com.drake.engine.helpers.InputHandler;
-import com.drake.engine.math.Vector2;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class MainRunner extends Engine {
 

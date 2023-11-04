@@ -26,31 +26,31 @@ public class MusicHandler implements Runnable {
         Engine.musicInstances.add(this);
     }
 
-//    public static Phrase CreateRandomPhrase(int length, int upperBound, int lowerBound, int upperRhythm){
-//        Phrase ph = new Phrase();
-//
-//        for(int i=0; i< length; i++)
-//        {
-//            Random rand = new Random();
-//            int pitch = rand.nextInt(lowerBound, upperBound);
-//            int rhythm = rand.nextInt(upperRhythm);
-//            ph.add(new Note(pitch, rhythm));
-//        }
-//        return ph;
-//    }
-//
-//    public static Phrase CreateRandomPhrase(int length, int upperBound, int lowerBound){
-//        Phrase ph = new Phrase();
-//
-//        for(int i=0; i< length; i++)
-//        {
-//            Random rand = new Random();
-//            int pitch = rand.nextInt(lowerBound, upperBound);
-//            int rhythm = rand.nextInt(4);
-//            ph.add(new Note(pitch, rhythm));
-//        }
-//        return ph;
-//    }
+    public static Phrase CreateRandomPhrase(int length, int upperBound, int lowerBound, int upperRhythm){
+        Phrase ph = new Phrase();
+
+        for(int i=0; i< length; i++)
+        {
+            Random rand = new Random();
+            int pitch = rand.nextInt(upperBound + 1 - lowerBound)+lowerBound;
+            int rhythm = rand.nextInt(upperRhythm);
+            ph.add(new Note(pitch, rhythm));
+        }
+        return ph;
+    }
+
+    public static Phrase CreateRandomPhrase(int length, int upperBound, int lowerBound){
+        Phrase ph = new Phrase();
+
+        for(int i=0; i< length; i++)
+        {
+            Random rand = new Random();
+            int pitch = rand.nextInt(upperBound + 1 - lowerBound)+lowerBound;
+            int rhythm = rand.nextInt(4);
+            ph.add(new Note(pitch, rhythm));
+        }
+        return ph;
+    }
 
     public void PlayCurrentPhraseOneshot(){
         Play.midi(phrase);

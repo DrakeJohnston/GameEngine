@@ -14,18 +14,14 @@ import java.util.HashMap;
 public class Screen extends JPanel implements MouseListener, KeyListener {
 
     public static int[][] pixels;
-
-    private int sx;
-    private int sy;
-    private int color;
+    static Engine engine;
 
     int pixelCount_x;
     int pixelCount_y;
 
     public Screen(int sizex, int sizey, int defColor){
-        sx = sizex;
-        sy = sizey;
-        color = defColor;
+        addKeyListener(this);
+        requestFocus();
 
         pixelCount_x = sizex/8;
         pixelCount_y = sizey/8;
@@ -55,6 +51,8 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
                 CreatePixel(new Vector2(i,j), g, new Color(co,co,co,255));
             }
         }
+
+        repaint();
     }
 
     public void CreatePixel(Vector2 pos, Graphics g, Color c){
@@ -73,12 +71,12 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        engine.OnKeyPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        engine.OnKeyReleased(e);
     }
 
     @Override

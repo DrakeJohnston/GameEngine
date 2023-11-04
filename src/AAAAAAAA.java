@@ -2,20 +2,11 @@ import com.drake.engine.GameFileManager;
 import com.drake.engine.MusicHandler;
 import com.drake.engine.core.Engine;
 import com.drake.engine.core.Gameobject;
-import com.drake.engine.core.UI.Canvas;
-import com.drake.engine.core.UI.UIElement;
-import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
 import jm.JMC;
 import jm.music.data.Phrase;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class AAAAAAAA extends Engine {
     public Gameobject.Direction direction;
@@ -38,56 +29,36 @@ public class AAAAAAAA extends Engine {
         Engine.changeBGChar("-");
         //game.addChild(player);
 
-//        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
-//        Phrase ph = MusicHandler.CreateRandomPhrase(5, 20, 10);
-//        Engine.PlaySong(ph, false);
-//        Engine.PlaySong(p, JMC.HALF_NOTE, false);
+        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
+        Phrase ph = MusicHandler.CreateRandomPhrase(5, 50, 40);
+        Engine.PlaySong(ph, false);
+        //Engine.PlaySong(p, JMC.HALF_NOTE, false);
 
-//        GameFileManager.LoadData(GameFileManager.getSaveLocation()+"SAVEFILE.sgam");
-//        System.out.println(GameFileManager.GetData("E") + " Dis the data!!!");
-//        int test = GameFileManager.GetData("E");
-//        GameFileManager.SaveInteger("E", 55);
+        GameFileManager.LoadData(GameFileManager.getSaveLocation()+"SAVEFILE.sgam");
+        System.out.println(GameFileManager.GetData("E") + " Dis the data!!!");
+        int testT = Integer.parseInt(GameFileManager.GetData("E"));
+        GameFileManager.SaveInteger("E", 55);
 
         //mainCanvas.addElement(title_s);
         //mainCanvas.setActive(false);
-        try {
-            BufferedImage im = ImageIO.read(new File("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\SpriteTest2.png"));
-            Gameobject test = new Gameobject(new Vector2(5,5), im, 5, "Test");
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        Gameobject test = new Gameobject(new Vector2(5,5), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test");
         super.init();
     }
 
     @Override
-    public void HandleInput() {
-//        if(game.getActive()){
-//            if(InputHandler.KeyMap.get(KeyEvent.VK_W)){
-//                direction = Gameobject.Direction.UP;
-//            }
-//            if(InputHandler.KeyMap.get(KeyEvent.VK_A)){
-//                direction = Gameobject.Direction.LEFT;
-//            }
-//            if(InputHandler.KeyMap.get(KeyEvent.VK_S)){
-//                direction = Gameobject.Direction.DOWN;
-//            }
-//            if(InputHandler.KeyMap.get(KeyEvent.VK_D)){
-//                direction = Gameobject.Direction.RIGHT;
-//                //System.out.println("Test");
-//            }
-//        }
-//
-//        if(InputHandler.KeyMap.get(KeyEvent.VK_ESCAPE)){
-//            game.setActive(false);
-//            mainCanvas.setActive(true);
-//        }
-
-        super.HandleInput();
+    public void OnKeyPressed(KeyEvent e) {
+        super.OnKeyPressed(e);
+        if(e.getKeyCode() == KeyEvent.VK_D){
+            Gameobject o = Engine.FindGameObject("Test");
+            o.Move(1, Gameobject.Direction.RIGHT);
+            //System.out.println("Moved: " + o.getPos().x);
+        }
     }
 
     @Override
     public void OnGameExit() {
-        //GameFileManager.SaveData("SAVEFILE");
+        GameFileManager.SaveData("SAVEFILE");
         super.OnGameExit();
     }
 

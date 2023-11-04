@@ -1,17 +1,17 @@
 package com.drake.engine.core;
 
-import com.drake.engine.GameFileManager;
 import com.drake.engine.MusicHandler;
 import com.drake.engine.core.UI.UIElement;
-import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.math.Vector2;
 import jm.music.data.Phrase;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-
-import static java.awt.event.KeyEvent.*;
 
 public class Engine {
 
@@ -26,14 +26,14 @@ public class Engine {
     public static ArrayList<MusicHandler> musicInstances = new ArrayList<>();
     public static ArrayList<Thread> musicThreads = new ArrayList<>();
 
-    public Renderer ui;
 
     /*Init function expected to be overriden to add new functionality on its own
     * starts the game loop and sets up the gui. Note: use super(bla, bla)
     * so that the rest of the init function continues
     * */
     public void init(){
-        ui = new Renderer(bColor, 600,600);
+        Renderer.InitRenderer(bColor, 600,600);
+        Screen.engine = this;
         new File("./data").mkdir();
         gameLoop();
     }
@@ -47,10 +47,9 @@ public class Engine {
     public void gameLoop(){
 
         Renderer.UpdateScreen();
-        HandleInput();
 
         try {
-            Thread.sleep(100);
+            Thread.sleep(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -59,6 +58,21 @@ public class Engine {
             gameLoop();
         }else {
             OnGameExit();
+            System.exit(1);
+        }
+
+    }
+
+    //Note: for the transition between pc use this code cus of the locations of projects:
+    //D:\Repositories\GameEngine\Resources\SpriteTest2.png
+    //C:\Users\ironb\OneDrive\Documents\GameEngine\Resources\SpriteTest2.png
+    public static BufferedImage LoadImage(String directory){
+        try {
+            return ImageIO.read(new File(directory));
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -70,6 +84,15 @@ public class Engine {
             t.interrupt();
         }
     }
+
+    public void OnKeyPressed(KeyEvent e){
+
+    }
+
+    public void OnKeyReleased(KeyEvent e){
+
+    }
+
 
     public static void PlaySongFromList(int num, boolean playOnce){
         MusicHandler m = new MusicHandler(songs.get(num), playOnce);
@@ -90,14 +113,6 @@ public class Engine {
         Thread t = new Thread(m);
         musicThreads.add(t);
         t.start();
-    }
-
-    //Basic input handling using the InputHandler helper class, should be overridden for new functionallity
-    //TODO: improve input system to allow more control
-    public void HandleInput() {
-        if (InputHandler.KeyMap.get(VK_BACK_SLASH)) {
-            System.out.println("debug key! : " + InputHandler.KeyMap.get(VK_BACK_SLASH));
-        }
     }
 
     //Adds a new object to the list

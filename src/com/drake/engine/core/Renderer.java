@@ -1,11 +1,11 @@
 package com.drake.engine.core;
 
-import com.drake.engine.helpers.InputHandler;
 import com.drake.engine.helpers.WindowHelper;
 import com.drake.engine.math.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 public class Renderer {
@@ -15,9 +15,15 @@ public class Renderer {
     public static JPanel uiSpace;
     public static JFrame window;
 
-    public Renderer(Color c, int windowX, int windowY){
+    static int defColor = 0;
+
+    public static void InitRenderer(Color c, int windowX, int windowY){
+        DIMX = windowX;
+        DIMY = windowY;
+
         window = new JFrame();
-        uiSpace = new Screen(600, 600, 0);
+        uiSpace = new Screen(DIMX, DIMY, defColor);
+        uiSpace.setDoubleBuffered(true);
 
         window.addWindowListener(new WindowHelper());
         window.setSize(DIMX,DIMY);
@@ -25,7 +31,8 @@ public class Renderer {
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        window.addKeyListener(new InputHandler());
+        //window.addKeyListener(new InputHandler());
+        window.addKeyListener((KeyListener) uiSpace);
 
         window.add(uiSpace);
         uiSpace.setSize(DIMX,DIMY);
@@ -37,6 +44,12 @@ public class Renderer {
     }
 
     public static void UpdateScreen(){
+        for(int j = 0; j < Screen.pixels.length; j++){
+            for (int k = 0; k < Screen.pixels[j].length; k++){
+                Screen.pixels[j][k] = defColor;
+            }
+        }
+
         for(Gameobject g : Engine.objects){
             BufferedImage i = (BufferedImage) g.getSprite();
             //(i.getWidth()*i.getHeight()) * 2 is the proper equation
@@ -58,19 +71,16 @@ public class Renderer {
                 }
             }
 
-            
+            int ax = 0;
             for (int x = 0; x < i.getWidth(); x++){
                 for(int y = 0; y < i.getHeight(); y++){
-                    int px = pixels[1];
-                    Screen.setPixel(new Vector2(g.getPos().x+x, g.getPos().y+y), px, 255);
+                    int px = greyScale[ax];
+                    //x and y must be inverted for image to show properly
+                    Screen.setPixel(new Vector2(g.getPos().x+y, g.getPos().y+x), px, 255);
+                    ax++;
                 }
             }
-
-//            String s = "";
-//            for(int j = 0; j < pixels.length; j++){
-//                s = s.concat(" " + pixels[j]);
-//            }
-//            System.out.println(s);
         }
+
     }
 }
