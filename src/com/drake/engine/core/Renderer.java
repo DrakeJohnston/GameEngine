@@ -44,9 +44,10 @@ public class Renderer {
     }
 
     public static void UpdateScreen(){
-        for(int j = 0; j < Screen.pixels.length; j++){
-            for (int k = 0; k < Screen.pixels[j].length; k++){
-                Screen.pixels[j][k] = defColor;
+
+        for(int j = 0; j < Screen.ScreenBuffer.length; j++){
+            for (int k = 0; k < Screen.ScreenBuffer[j].length; k++){
+                Screen.ScreenBuffer[j][k] = defColor;
             }
         }
 
@@ -54,27 +55,11 @@ public class Renderer {
             BufferedImage i = (BufferedImage) g.getSprite();
             //(i.getWidth()*i.getHeight()) * 2 is the proper equation
             //128 for 8x8
-            int[] pixels = new int[((i.getWidth()*i.getHeight())*2)];
-            i.getData().getPixels(0,0, i.getWidth(), i.getHeight(), pixels);
-
-            int[] greyScale = new int[i.getHeight()*i.getWidth()];
-
-            boolean tmp = false;
-            int index = 0;
-            for(int px : pixels){
-                if(!tmp){
-                    greyScale[index] = px;
-                    index++;
-                    tmp=true;
-                }else {
-                    tmp = false;
-                }
-            }
 
             int ax = 0;
             for (int x = 0; x < i.getWidth(); x++){
                 for(int y = 0; y < i.getHeight(); y++){
-                    int px = greyScale[ax];
+                    int px = g.getGrayscalePixels()[ax];
                     //x and y must be inverted for image to show properly
                     Screen.setPixel(new Vector2(g.getPos().x+y, g.getPos().y+x), px, 255);
                     ax++;

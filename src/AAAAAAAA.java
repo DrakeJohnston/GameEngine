@@ -29,10 +29,9 @@ public class AAAAAAAA extends Engine {
         Engine.changeBGChar("-");
         //game.addChild(player);
 
-        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
-        Phrase ph = MusicHandler.CreateRandomPhrase(5, 50, 40);
-        Engine.PlaySong(ph, false);
-        //Engine.PlaySong(p, JMC.HALF_NOTE, false);
+//        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
+//        Phrase ph = MusicHandler.CreateRandomPhrase(5, 100, 90);
+//        Engine.PlaySong(p, JMC.EIGHTH_NOTE, false);
 
         GameFileManager.LoadData(GameFileManager.getSaveLocation()+"SAVEFILE.sgam");
         System.out.println(GameFileManager.GetData("E") + " Dis the data!!!");
@@ -42,17 +41,27 @@ public class AAAAAAAA extends Engine {
         //mainCanvas.addElement(title_s);
         //mainCanvas.setActive(false);
 
-        Gameobject test = new Gameobject(new Vector2(5,5), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test");
+        Gameobject test = new Gameobject(new Vector2(5,5), Engine.LoadImage("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test", false);
+        Gameobject wall = new Gameobject(new Vector2(40,40), Engine.LoadImage("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\Wall.png"), 8, "Wall", true);
         super.init();
     }
 
     @Override
     public void OnKeyPressed(KeyEvent e) {
         super.OnKeyPressed(e);
+        Gameobject o = Engine.FindGameObject("Test");
         if(e.getKeyCode() == KeyEvent.VK_D){
-            Gameobject o = Engine.FindGameObject("Test");
             o.Move(1, Gameobject.Direction.RIGHT);
             //System.out.println("Moved: " + o.getPos().x);
+        }
+        if(e.getKeyCode() == KeyEvent.VK_A){
+            o.Move(1, Gameobject.Direction.LEFT);
+        }
+        if(e.getKeyCode() == KeyEvent.VK_W){
+            o.Move(1, Gameobject.Direction.UP);
+        }
+        if(e.getKeyCode() == KeyEvent.VK_S){
+            o.Move(1, Gameobject.Direction.DOWN);
         }
     }
 
@@ -63,10 +72,10 @@ public class AAAAAAAA extends Engine {
     }
 
     @Override
-    public void gameLoop() {
+    public void Update() {
 
         //player.Move(1, direction);
 
-        super.gameLoop();
+        super.Update();
     }
 }

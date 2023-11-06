@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 public class Screen extends JPanel implements MouseListener, KeyListener {
 
+    public static int[][] ScreenBuffer;
     public static int[][] pixels;
     static Engine engine;
 
@@ -27,23 +28,31 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
         pixelCount_y = sizey/8;
 
         pixels = new int[pixelCount_x][pixelCount_y];
+        ScreenBuffer = new int[pixelCount_x][pixelCount_y];
         for(int x = 0; x < pixelCount_x; x++){
             for(int y = 0; y < pixelCount_y; y++){
                 pixels[x][y] = defColor;
+                ScreenBuffer[x][y] = defColor;
             }
         }
     }
 
     public static void setPixel(Vector2 pos, int color){
-        pixels[pos.x][pos.y] = color;
+        ScreenBuffer[pos.x][pos.y] = color;
     }
     public static void setPixel(Vector2 pos, int rgb, int a){
-        pixels[pos.x][pos.y] = rgb;
+        ScreenBuffer[pos.x][pos.y] = rgb;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        for (int x=0; x < pixelCount_x; x++){
+            for(int y=0; y < pixelCount_y; y++){
+                pixels[x][y] = ScreenBuffer[x][y];
+            }
+        }
 
         for(int i = 0; i < pixelCount_x; i++) {
             for(int j = 0; j < pixelCount_y; j++) {

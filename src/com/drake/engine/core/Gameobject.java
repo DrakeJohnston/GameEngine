@@ -25,6 +25,10 @@ public class Gameobject {
     //private String symbol;
     //_______________NEW AREA_____________________________
     private BufferedImage sprite;
+    private int[] pixelArray;
+    private int[] grayscalePixels;
+
+    private Vector2[][] collider;
     //___________________________________________________
     private String name;
     private int size;
@@ -66,13 +70,30 @@ public class Gameobject {
         initGameObject();
     }
 
-    public Gameobject(Vector2 pos, BufferedImage sprite, int size, String name){
+    public Gameobject(Vector2 pos, BufferedImage sprite, int size, String name, boolean isStatic){
         this.pos = pos;
         this.name = name;
         this.isEmpty = false;
         this.size = size;
+        this.isStatic = isStatic;
 
         this.sprite = sprite;
+        pixelArray = new int[((sprite.getWidth()*sprite.getHeight())*2)];
+        sprite.getData().getPixels(0,0, sprite.getWidth(), sprite.getHeight(), pixelArray);
+
+        grayscalePixels = new int[sprite.getHeight()*sprite.getWidth()];
+
+        boolean tmp = false;
+        int index = 0;
+        for(int px : pixelArray){
+            if(!tmp){
+                grayscalePixels[index] = px;
+                index++;
+                tmp=true;
+            }else {
+                tmp = false;
+            }
+        }
 
         //createShape();
         initGameObject();
@@ -84,6 +105,13 @@ public class Gameobject {
     public void initGameObject() {
         id = lastID+1;
         lastID = id;
+
+        collider = new Vector2[size][size];
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+                collider[x][y] = new Vector2(x+ pos.x, y+ pos.y);
+            }
+        }
 
         Engine.AddNewObject(this);
     }
@@ -104,6 +132,7 @@ public class Gameobject {
     //Method to handle the movement of gameobjects, uses collision detection
     public void Move(int amount, Direction d){
         if(isActive) {
+
             switch (d) {
                 case UP -> {
                     if (Engine.FindGameObject(new Vector2(pos.x, pos.y - amount)) != null) {
@@ -250,7 +279,11 @@ public class Gameobject {
         this.pos = pos;
     }
 
-//    public String getSymbol() {
+    public int[] getGrayscalePixels() {
+        return grayscalePixels;
+    }
+
+    //    public String getSymbol() {
 //        return symbol;
 //    }
 //

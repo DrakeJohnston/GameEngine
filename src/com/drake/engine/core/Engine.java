@@ -19,6 +19,7 @@ public class Engine {
     public static ArrayList<UIElement> uio = new ArrayList<>();
     public static boolean isActive = true;
     public static boolean debugGrid = false;
+    public static Thread gameLoop;
     private Color bColor;
 
     //todo: Engine probably shouldnt be handling this much music handling
@@ -35,6 +36,7 @@ public class Engine {
         Renderer.InitRenderer(bColor, 600,600);
         Screen.engine = this;
         new File("./data").mkdir();
+        gameLoop = new Thread(() -> gameLoop());
         gameLoop();
     }
 
@@ -44,22 +46,27 @@ public class Engine {
     * after your code
     * */
     //TODO: find a new method of creating a game loop
-    public void gameLoop(){
+    private void gameLoop(){
 
-        Renderer.UpdateScreen();
+        while(isActive) {
 
-        try {
-            Thread.sleep(20);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            Renderer.UpdateScreen();
+            Update();
+
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 
-        if(isActive) {
-            gameLoop();
-        }else {
-            OnGameExit();
-            System.exit(1);
-        }
+        OnGameExit();
+        System.exit(1);
+
+    }
+
+    public void Update(){
 
     }
 
