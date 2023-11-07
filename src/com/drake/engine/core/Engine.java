@@ -2,6 +2,7 @@ package com.drake.engine.core;
 
 import com.drake.engine.MusicHandler;
 import com.drake.engine.core.UI.UIElement;
+import com.drake.engine.math.Physics;
 import com.drake.engine.math.Vector2;
 import jm.music.data.Phrase;
 
@@ -20,6 +21,7 @@ public class Engine {
     public static boolean isActive = true;
     public static boolean debugGrid = false;
     public static Thread gameLoop;
+    public static Thread physLoop;
     private Color bColor;
 
     //todo: Engine probably shouldnt be handling this much music handling
@@ -36,7 +38,6 @@ public class Engine {
         Renderer.InitRenderer(bColor, 600,600);
         Screen.engine = this;
         new File("./data").mkdir();
-        gameLoop = new Thread(() -> gameLoop());
         gameLoop();
     }
 
@@ -50,8 +51,9 @@ public class Engine {
 
         while(isActive) {
 
-            Renderer.UpdateScreen();
+            Physics.UpdateColliders();
             Update();
+            Renderer.UpdateScreen();
 
             try {
                 Thread.sleep(5);
