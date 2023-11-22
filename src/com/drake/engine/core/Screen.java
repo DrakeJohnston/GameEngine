@@ -17,8 +17,8 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
     public static int[][] pixels;
     static Engine engine;
 
-    int pixelCount_x;
-    int pixelCount_y;
+    public static int pixelCount_x;
+    public static int pixelCount_y;
 
     public Screen(int sizex, int sizey, int defColor){
         addKeyListener(this);
@@ -42,6 +42,10 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
     }
     public static void setPixel(Vector2 pos, int rgb, int a){
         ScreenBuffer[pos.x][pos.y] = rgb;
+    }
+
+    public static Vector2 getPixelCount(){
+        return new Vector2(pixelCount_x, pixelCount_y);
     }
 
     @Override

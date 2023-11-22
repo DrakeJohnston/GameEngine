@@ -57,11 +57,19 @@ public class Renderer {
             //128 for 8x8
 
             int ax = 0;
-            for (int x = 0; x < i.getWidth(); x++){
-                for(int y = 0; y < i.getHeight(); y++){
+            //Center based rendering
+            for (int x = -i.getWidth()/2; x < i.getWidth()/2; x++){
+                for(int y = -i.getHeight()/2; y < i.getHeight()/2; y++){
                     int px = g.getGrayscalePixels()[ax];
                     //x and y must be inverted for image to show properly
-                    Screen.setPixel(new Vector2(g.getPos().x+y, g.getPos().y+x), px, 255);
+                    int x_pos = g.getPos().x+y;
+                    int y_pos = g.getPos().y+x;
+
+                    if(x_pos > 0 && y_pos > 0) {
+                        if(x_pos < Screen.pixelCount_x && y_pos < Screen.pixelCount_y) {
+                            Screen.setPixel(new Vector2(g.getPos().x + y, g.getPos().y + x), px, 255);
+                        }
+                    }
                     ax++;
                 }
             }

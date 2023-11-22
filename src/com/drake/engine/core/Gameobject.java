@@ -36,7 +36,7 @@ public class Gameobject {
     private int[] pixelArray;
     private int[] grayscalePixels;
 
-    private Vector2[] collider;
+    private Vector2[][] collider;
     private int center;
     //___________________________________________________
     private String name;
@@ -117,24 +117,47 @@ public class Gameobject {
         id = lastID+1;
         lastID = id;
 
-        collider = new Vector2[4];
+        collider = new Vector2[size][size];
+        int xVal = -size/2;
+        int yVal = -size/2;
 
-        collider[0] = new Vector2(pos.x, pos.y);
-        collider[1] = new Vector2(size + pos.x,pos.y);
-        collider[2] = new Vector2(pos.x,size + pos.y);
-        collider[3] = new Vector2(size + pos.x,size + pos.y);
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+                collider[x][y] = new Vector2(pos.x+x,pos.y+y);
+                //xVal++;
+                //yVal++;
+                //System.out.println((x+xVal) + " : " + (y+yVal) + "----" + pos.x + " : " + pos.y);
+            }
+        }
 
         Engine.AddNewObject(this);
     }
 
-    public boolean CheckCollisions(){
+    public boolean hasCollided(){
         for(Gameobject o : Engine.objects){
             if(o.isStatic) {
-                for (Vector2 vecs : collider) {
-                    for (Vector2 vecs2 : o.collider) {
-                        if (vecs.CompareTo(vecs2)) {
-                            System.out.println("Test");
-                            return true;
+                Vector2[][] oCollider = o.getCollider();
+                Vector2[] ourColider = new Vector2[collider.length * collider.length];
+                //System.out.println("OurCollider: " + ourColider.length + " Collider: " + collider.length);
+                int tmp = 0;
+                for(int i=0; i < collider.length; i++){
+                    for(int j=0; j<collider[i].length; j++){
+                        //System.out.println("TMP: " + tmp);
+                        ourColider[tmp] = collider[i][j];
+                        System.out.println(collider[i][j]);
+                        tmp++;
+                    }
+                }
+
+                for(int c=0; c< ourColider.length; c++) {
+                    for (int x = 0; x < oCollider.length; x++) {
+                        for (int y = 0; y < oCollider[x].length; y++) {
+                            //oCollider[x][y].CompareTo(collider[x][y]);
+                            if(ourColider[c].x == oCollider[x][y].x && ourColider[c].y == oCollider[x][y].y){
+                                System.out.println("True? : " + o.name);
+                                System.out.println(ourColider[c].toString() + " : " + oCollider[x][y].toString());
+                                return true;
+                            }
                         }
                     }
                 }
@@ -310,7 +333,7 @@ public class Gameobject {
         return grayscalePixels;
     }
 
-    public Vector2[] getCollider() {
+    public Vector2[][] getCollider() {
         return collider;
     }
 

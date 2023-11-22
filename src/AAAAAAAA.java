@@ -1,12 +1,7 @@
 import com.drake.engine.GameFileManager;
-import com.drake.engine.MusicHandler;
 import com.drake.engine.core.Engine;
 import com.drake.engine.core.Gameobject;
-import com.drake.engine.math.CollisionReturn;
-import com.drake.engine.math.Physics;
 import com.drake.engine.math.Vector2;
-import jm.JMC;
-import jm.music.data.Phrase;
 
 import java.awt.event.KeyEvent;
 
@@ -43,8 +38,8 @@ public class AAAAAAAA extends Engine {
         //mainCanvas.addElement(title_s);
         //mainCanvas.setActive(false);
 
-        Gameobject test = new Gameobject(new Vector2(0,0), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test", false);
-        Gameobject wall = new Gameobject(new Vector2(10,10), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\Wall.png"), 8, "Wall", true);
+        Gameobject test = new Gameobject(new Vector2(5,5), Engine.LoadImage("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test", false);
+        Gameobject wall = new Gameobject(new Vector2(30,30), Engine.LoadImage("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\Wall.png"), 8, "Wall", true);
         super.init();
     }
 
@@ -55,23 +50,23 @@ public class AAAAAAAA extends Engine {
         //CollisionReturn c = Physics.HasCollided(o);
 
         if(e.getKeyCode() == KeyEvent.VK_D){
-            if(!o.CheckCollisions()){
+            if(!o.hasCollided()){
                 o.setPos(new Vector2(o.getPos().x+1, o.getPos().y));
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_S){
-            if(!o.CheckCollisions()){
+            if(!o.hasCollided()){
                 //System.out.println("Test");
                 o.setPos(new Vector2(o.getPos().x, o.getPos().y+1));
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_A){
-            if(!o.CheckCollisions()){
+            if(!o.hasCollided()){
                 o.setPos(new Vector2(o.getPos().x-1, o.getPos().y));
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_W){
-            if(!o.CheckCollisions()){
+            if(!o.hasCollided()){
                 o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
             }
         }

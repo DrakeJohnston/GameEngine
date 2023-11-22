@@ -7,10 +7,14 @@ public class Physics {
 
     public static void UpdateColliders(){
         for (Gameobject o : Engine.objects) {
-            for (Vector2 vec : o.getCollider()) {
-                vec.x += vec.x + o.getPos().x;
-                vec.y += vec.y + o.getPos().y;
-                //System.out.println("Workin!");
+            Vector2[][] collider = o.getCollider();
+            int xVal = -o.getSize()/2;
+            int yVal = -o.getSize()/2;
+
+            for(int x = 0; x < o.getSize(); x++){
+                for(int y = 0; y < o.getSize(); y++){
+                    collider[x][y] = new Vector2(o.getPos().x,o.getPos().y);
+                }
             }
         }
     }
