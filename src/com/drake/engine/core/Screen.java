@@ -77,6 +77,10 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
         }
     }
 
+    public static boolean hasPixelAt(Vector2 loc){
+        return pixels[loc.x][loc.y] != 0;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 

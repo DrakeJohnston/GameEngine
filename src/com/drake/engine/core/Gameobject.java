@@ -1,5 +1,6 @@
 package com.drake.engine.core;
 
+import com.drake.engine.helpers.CollisionOut;
 import com.drake.engine.math.Vector2;
 
 import java.awt.*;
@@ -133,33 +134,25 @@ public class Gameobject {
         Engine.AddNewObject(this);
     }
 
-    public boolean hasCollided(){
-        for(Gameobject o : Engine.objects){
-            if(o.isStatic) {
-                Vector2[][] oCollider = o.getCollider();
-                Vector2[] ourColider = new Vector2[collider.length * collider.length];
-                //System.out.println("OurCollider: " + ourColider.length + " Collider: " + collider.length);
-                int tmp = 0;
-                for(int i=0; i < collider.length; i++){
-                    for(int j=0; j<collider[i].length; j++){
-                        //System.out.println("TMP: " + tmp);
-                        ourColider[tmp] = collider[i][j];
-                        System.out.println(collider[i][j]);
-                        tmp++;
-                    }
+    public CollisionOut hasCollided(){
+        for (Gameobject g : Engine.objects){
+            int dist = Vector2.distanceTo(this.pos, g.pos);
+            if(dist <= 1){
+                if(CheckNeighbouring()){
+                    Vector2 distComp = Vector2.distance(this.pos, g.pos).normalize();
+                    return new CollisionOut(dist, g.getPos(), distComp);
                 }
+            }
+        }
+        return new CollisionOut(10000, new Vector2(0,0), null);
+    }
 
-                for(int c=0; c< ourColider.length; c++) {
-                    for (int x = 0; x < oCollider.length; x++) {
-                        for (int y = 0; y < oCollider[x].length; y++) {
-                            //oCollider[x][y].CompareTo(collider[x][y]);
-                            if(ourColider[c].x == oCollider[x][y].x && ourColider[c].y == oCollider[x][y].y){
-                                System.out.println("True? : " + o.name);
-                                System.out.println(ourColider[c].toString() + " : " + oCollider[x][y].toString());
-                                return true;
-                            }
-                        }
-                    }
+    private boolean CheckNeighbouring() {
+        for(int i = 1; i < size; i++){
+            for (int j = 1; j < size; j++){
+                Vector2 chkPos = new Vector2(size+i, size+j);
+                if(Screen.hasPixelAt(chkPos)){
+                    return true;
                 }
             }
         }
@@ -179,100 +172,6 @@ public class Gameobject {
 
     //TODO: Optimise a lil as the cases can probably be made into one method as they are similar
 
-    //Method to handle the movement of gameobjects, uses collision detection
-//    public void Move(int amount, Direction d){
-//        if(isActive) {
-//
-//            switch (d) {
-//                case UP -> {
-//                    if (Engine.FindGameObject(new Vector2(pos.x, pos.y - amount)) != null) {
-//                        Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y - amount));
-//                        if (!o.isStatic) {
-//                            setPos(new Vector2(pos.x, pos.y - amount));
-//                        } else {
-//                            if (amount > 0) {
-//                                Move(amount - 1, d);
-//                            }
-//                        }
-//                    } else {
-//                        setPos(new Vector2(pos.x, pos.y - amount));
-//                    }
-//                }
-//                case DOWN -> {
-//                    if (size > 1) {
-//                        if (Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size))) != null) {
-//                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y + (amount + size)));
-//                            if (!o.isStatic) {
-//                                setPos(new Vector2(pos.x, pos.y + amount));
-//                            } else {
-//                                if (amount > 0) {
-//                                    Move(amount - 1, d);
-//                                }
-//                            }
-//                        } else {
-//                            setPos(new Vector2(pos.x, pos.y + amount));
-//                        }
-//                    } else {
-//                        if (Engine.FindGameObject(new Vector2(pos.x, pos.y + amount)) != null) {
-//                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x, pos.y + amount));
-//                            if (!o.isStatic) {
-//                                setPos(new Vector2(pos.x, pos.y + amount));
-//                            } else {
-//                                if (amount > 0) {
-//                                    Move(amount - 1, d);
-//                                }
-//                            }
-//                        } else {
-//                            setPos(new Vector2(pos.x, pos.y + amount));
-//                        }
-//                    }
-//                }
-//                case LEFT -> {
-//                    if (Engine.FindGameObject(new Vector2(pos.x - amount, pos.y)) != null) {
-//                        Gameobject o = Engine.FindGameObject(new Vector2(pos.x - amount, pos.y));
-//                        if (!o.isStatic) {
-//                            setPos(new Vector2(pos.x - amount, pos.y));
-//                        } else {
-//                            if (amount > 0) {
-//                                Move(amount - 1, d);
-//                            }
-//                        }
-//                    } else {
-//                        setPos(new Vector2(pos.x - amount, pos.y));
-//                    }
-//                }
-//                case RIGHT -> {
-//                    if (size > 0) {
-//                        if (Engine.FindGameObject(new Vector2(pos.x + (amount + size), pos.y)) != null) {
-//                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x + (amount + size), pos.y));
-//                            if (!o.isStatic) {
-//                                setPos(new Vector2(pos.x + amount, pos.y));
-//                            } else {
-//                                if (amount > 0) {
-//                                    Move(amount - 1, d);
-//                                }
-//                            }
-//                        } else {
-//                            setPos(new Vector2(pos.x + amount, pos.y));
-//                        }
-//                    } else {
-//                        if (Engine.FindGameObject(new Vector2(pos.x + amount, pos.y)) != null) {
-//                            Gameobject o = Engine.FindGameObject(new Vector2(pos.x + amount, pos.y));
-//                            if (!o.isStatic) {
-//                                setPos(new Vector2(pos.x + amount, pos.y));
-//                            } else {
-//                                if (amount > 0) {
-//                                    Move(amount - 1, d);
-//                                }
-//                            }
-//                        } else {
-//                            setPos(new Vector2(pos.x + amount, pos.y));
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     private boolean CheckForBlocking(Vector2 pos){
         if (Engine.FindGameObject(pos) != null) {

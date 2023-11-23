@@ -46,30 +46,30 @@ public class AAAAAAAA extends Engine {
     @Override
     public void OnKeyPressed(KeyEvent e) {
         super.OnKeyPressed(e);
-        Gameobject o = Engine.FindGameObject("Test");
-        //CollisionReturn c = Physics.HasCollided(o);
-
-        if(e.getKeyCode() == KeyEvent.VK_D){
-            if(!o.hasCollided()){
-                o.setPos(new Vector2(o.getPos().x+1, o.getPos().y));
-            }
-        }
-        if(e.getKeyCode() == KeyEvent.VK_S){
-            if(!o.hasCollided()){
-                //System.out.println("Test");
-                o.setPos(new Vector2(o.getPos().x, o.getPos().y+1));
-            }
-        }
-        if(e.getKeyCode() == KeyEvent.VK_A){
-            if(!o.hasCollided()){
-                o.setPos(new Vector2(o.getPos().x-1, o.getPos().y));
-            }
-        }
-        if(e.getKeyCode() == KeyEvent.VK_W){
-            if(!o.hasCollided()){
-                o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
-            }
-        }
+//        Gameobject o = Engine.FindGameObject("Test");
+//        //CollisionReturn c = Physics.HasCollided(o);
+//
+//        if(e.getKeyCode() == KeyEvent.VK_D){
+//            if(!o.hasCollided()){
+//                o.setPos(new Vector2(o.getPos().x+1, o.getPos().y));
+//            }
+//        }
+//        if(e.getKeyCode() == KeyEvent.VK_S){
+//            if(!o.hasCollided()){
+//                //System.out.println("Test");
+//                o.setPos(new Vector2(o.getPos().x, o.getPos().y+1));
+//            }
+//        }
+//        if(e.getKeyCode() == KeyEvent.VK_A){
+//            if(!o.hasCollided()){
+//                o.setPos(new Vector2(o.getPos().x-1, o.getPos().y));
+//            }
+//        }
+//        if(e.getKeyCode() == KeyEvent.VK_W){
+//            if(!o.hasCollided()){
+//                o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
+//            }
+//        }
     }
 
     @Override
