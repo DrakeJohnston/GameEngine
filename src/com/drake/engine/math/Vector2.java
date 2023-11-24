@@ -19,11 +19,16 @@ public class Vector2 {
 
     //Todo: test fuctionallity of new functions
 
-    public static int distanceTo(Vector2 a, Vector2 b){
-        int yP = b.y - a.y;
-        int xP = b.x - a.x;
+    public static int getMagnitude(Vector2 a, Vector2 b){
+        Vector2 v = Vector2.distance(a,b);
 
-        int rawDist = MathEngine.Exponent(xP, 2) + MathEngine.Exponent(yP, 2);
+        int rawDist = MathEngine.Exponent(v.x, 2) + MathEngine.Exponent(v.y, 2);
+        int dist = MathEngine.SRoot(rawDist);
+        return Abs(dist);
+    }
+    public static int getMagnitude(Vector2 v){
+
+        int rawDist = MathEngine.Exponent(v.x, 2) + MathEngine.Exponent(v.y, 2);
         int dist = MathEngine.SRoot(rawDist);
         return Abs(dist);
     }
@@ -35,9 +40,11 @@ public class Vector2 {
     }
 
     public Vector2 normalize(){
-        int val = y/x;
-        int xV = x/val;
-        int yV = y/val;
+        float val = getMagnitude(new Vector2(x,y));
+        float xTmp = x/val;
+        float yTmp = y/val;
+        int xV = MathEngine.RoundUp(xTmp);
+        int yV = MathEngine.RoundUp(yTmp);
         return new Vector2(xV, yV);
     }
 
@@ -51,5 +58,14 @@ public class Vector2 {
     @Override
     public String toString() {
         return "x: "+x+" y: "+y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Vector2){
+            Vector2 v = (Vector2) obj;
+            return x == v.x && y == v.y;
+        }
+        return false;
     }
 }

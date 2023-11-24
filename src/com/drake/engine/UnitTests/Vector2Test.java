@@ -1,25 +1,27 @@
 package com.drake.engine.UnitTests;
 
 import com.drake.engine.math.Vector2;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class Vector2Test {
 
     @org.junit.Test
-    public void distanceTo() {
+    public void magnitude() {
         Vector2 vecA = new Vector2(1,1);
         Vector2 vecB = new Vector2(3,3);
-        int actual = Vector2.distanceTo(vecA, vecB);
+        int actual = Vector2.getMagnitude(vecA, vecB);
         int expected = 2;
         String message = "Expected: " + expected +" got: " + actual;
         assertEquals(message, expected, actual);
     }
 
-    public void distanceTo_1() {
+    @Test
+    public void magnitude_1() {
         Vector2 vecA = new Vector2(1,1);
         Vector2 vecB = new Vector2(3,3);
-        int actual = Vector2.distanceTo(vecB, vecA);
+        int actual = Vector2.getMagnitude(vecB, vecA);
         int expected = 2;
         String message = "Expected: " + expected +" got: " + actual;
         assertEquals(message, expected, actual);
@@ -29,17 +31,46 @@ public class Vector2Test {
     public void distance() {
         Vector2 vecA = new Vector2(1,1);
         Vector2 vecB = new Vector2(3,3);
+
         Vector2 actual = Vector2.distance(vecA, vecB);
         Vector2 expected = new Vector2(2,2);
+
+        assertEquals(expected, actual);
+    }
+
+    @org.junit.Test
+    public void normalize() {
+        Vector2 vec2 = new Vector2(3,3);
+        Vector2 vec1 = new Vector2(0,0);
+        Vector2 vD = Vector2.distance(vec1, vec2);
+
+        Vector2 expected = new Vector2(1, 1);
+        Vector2 actual = vD.normalize();
+
         String message = "Expected: " + expected +" got: " + actual;
         assertEquals(message, expected, actual);
     }
 
     @org.junit.Test
-    public void normalize() {
-        Vector2 vec = new Vector2(3,4);
-        Vector2 expected = new Vector2(0, 0);
+    public void normalize_1() {
+        Vector2 vec = new Vector2(10,5);
+
+        Vector2 expected = new Vector2(1, 1);
         Vector2 actual = vec.normalize();
+
+        String message = "Expected: " + expected +" got: " + actual;
+        assertEquals(message, expected, actual);
+    }
+
+    @org.junit.Test
+    public void normalize_2() {
+        Vector2 vec = new Vector2(10,5);
+        Vector2 vec2 = new Vector2(3,3);
+        Vector2 dist = Vector2.distance(vec, vec2);
+
+        Vector2 expected = new Vector2(-1, -1);
+        Vector2 actual = dist.normalize();
+
         String message = "Expected: " + expected +" got: " + actual;
         assertEquals(message, expected, actual);
     }

@@ -136,7 +136,7 @@ public class Gameobject {
 
     public CollisionOut hasCollided(){
         for (Gameobject g : Engine.objects){
-            int dist = Vector2.distanceTo(this.pos, g.pos);
+            int dist = Vector2.getMagnitude(this.pos, g.pos);
             if(dist <= 1){
                 if(CheckNeighbouring()){
                     Vector2 distComp = Vector2.distance(this.pos, g.pos).normalize();
