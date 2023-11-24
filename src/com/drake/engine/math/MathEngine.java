@@ -51,14 +51,34 @@ public class MathEngine {
 
     public static int RoundUp(float f){
         int intVers = (int) f;
-        return intVers+1;
+        if(f < 0) {
+            intVers = Abs(intVers);
+            float dec = f + intVers;
+            if (dec != 0) {
+                return -(intVers + 1);
+            }
+        }else {
+            float dec = f - intVers;
+            if(dec != 0) {
+                return intVers + 1;
+            }
+        }
+        return intVers;
     }
 
     public static int Round(float f){
         int intVers = (int) f;
-        float decimal = f - intVers;
-        if(decimal >= 0.5 && decimal < 1){
-            return intVers+1;
+        if(intVers > 0) {
+            float decimal = f - intVers;
+            if (decimal >= 0.5 && decimal < 1) {
+                return intVers + 1;
+            }
+        }else {
+            intVers = -intVers;
+            float decimal = f - intVers;
+            if (decimal >= 0.5 && decimal < 1) {
+                return -(intVers + 1);
+            }
         }
         return intVers;
     }

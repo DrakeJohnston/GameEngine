@@ -64,6 +64,22 @@ public class MathEngineTest {
     }
 
     @Test
+    public void roundUp_1() {
+        int expected = -3;
+        int actual = MathEngine.RoundUp(-2.45f);
+        String message = "Expected: " + expected + " Got: " + actual;
+        assertEquals(message, expected, actual);
+    }
+
+    @Test
+    public void roundUp_2() {
+        int expected = -3;
+        int actual = MathEngine.RoundUp(-3f);
+        String message = "Expected: " + expected + " Got: " + actual;
+        assertEquals(message, expected, actual);
+    }
+
+    @Test
     public void round() {
         int expected = 2;
         int actual = MathEngine.Round(2.45f);
