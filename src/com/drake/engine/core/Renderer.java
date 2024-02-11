@@ -51,26 +51,28 @@ public class Renderer {
             }
         }
 
-        for(Gameobject g : Engine.objects){
-            BufferedImage i = (BufferedImage) g.getSprite();
-            //(i.getWidth()*i.getHeight()) * 2 is the proper equation
-            //128 for 8x8
+        for(Gameobject g : Gameobject.objects){
+            if(!g.isEmpty()) {
+                BufferedImage i = (BufferedImage) g.getSprite();
+                //(i.getWidth()*i.getHeight()) * 2 is the proper equation
+                //128 for 8x8
 
-            int ax = 0;
-            //Center based rendering
-            for (int x = -i.getWidth()/2; x < i.getWidth()/2; x++){
-                for(int y = -i.getHeight()/2; y < i.getHeight()/2; y++){
-                    int px = g.getGrayscalePixels()[ax];
-                    //x and y must be inverted for image to show properly
-                    int x_pos = g.getPos().x+y;
-                    int y_pos = g.getPos().y+x;
+                int ax = 0;
+                //Center based rendering
+                for (int x = -i.getWidth() / 2; x < i.getWidth() / 2; x++) {
+                    for (int y = -i.getHeight() / 2; y < i.getHeight() / 2; y++) {
+                        int px = g.getGrayscalePixels()[ax];
+                        //x and y must be inverted for image to show properly
+                        int x_pos = g.getPos().x + y;
+                        int y_pos = g.getPos().y + x;
 
-                    if(x_pos > 0 && y_pos > 0) {
-                        if(x_pos < Screen.pixelCount_x && y_pos < Screen.pixelCount_y) {
-                            Screen.setPixel(new Vector2(g.getPos().x + y, g.getPos().y + x), px, 255);
+                        if (x_pos > 0 && y_pos > 0) {
+                            if (x_pos < Screen.pixelCount_x && y_pos < Screen.pixelCount_y) {
+                                Screen.setPixel(new Vector2(g.getPos().x + y, g.getPos().y + x), px, 255);
+                            }
                         }
+                        ax++;
                     }
-                    ax++;
                 }
             }
         }

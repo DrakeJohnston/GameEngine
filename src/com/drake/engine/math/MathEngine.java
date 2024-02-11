@@ -51,11 +51,14 @@ public class MathEngine {
 
     public static int RoundUp(float f){
         int intVers = (int) f;
+
         if(f < 0) {
             intVers = Abs(intVers);
             float dec = f + intVers;
             if (dec != 0) {
                 return -(intVers + 1);
+            }else {
+                return (int) f;
             }
         }else {
             float dec = f - intVers;

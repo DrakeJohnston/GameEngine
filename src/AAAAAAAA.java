@@ -35,11 +35,15 @@ public class AAAAAAAA extends Engine {
         int testT = Integer.parseInt(GameFileManager.GetData("E"));
         GameFileManager.SaveInteger("E", 55);
 
-        //mainCanvas.addElement(title_s);
-        //mainCanvas.setActive(false);
 
-        Gameobject test = new Gameobject(new Vector2(5,5), Engine.LoadImage("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test", false);
-        Gameobject wall = new Gameobject(new Vector2(30,30), Engine.LoadImage("C:\\Users\\ironb\\OneDrive\\Documents\\GameEngine\\Resources\\Wall.png"), 8, "Wall", true);
+        //Gameobject test = new Gameobject(new Vector2(5,5), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test", false);
+        //Gameobject wall = new Gameobject(new Vector2(30,30), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\Wall.png"), 8, "Wall", true);
+
+        Gameobject t1 = new Gameobject(new Vector2(1,1), "t1",1);
+        Gameobject t2 = new Gameobject(new Vector2(5,5), "t1",1);
+        t1.transformObject(new Vector2(5,5));
+        System.out.println(t1.getPos());
+
         super.init();
     }
 

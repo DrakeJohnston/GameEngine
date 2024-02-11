@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class Engine {
 
-    public static ArrayList<Gameobject> objects = new ArrayList<>();
     public static ArrayList<UIElement> uio = new ArrayList<>();
     public static boolean isActive = true;
     public static boolean debugGrid = false;
@@ -75,6 +74,7 @@ public class Engine {
     //Note: for the transition between pc use this code cus of the locations of projects:
     //D:\Repositories\GameEngine\Resources\SpriteTest2.png
     //C:\Users\ironb\OneDrive\Documents\GameEngine\Resources\SpriteTest2.png
+    //todo: make the engine auto find the current dir of project
     public static BufferedImage LoadImage(String directory){
         try {
             return ImageIO.read(new File(directory));
@@ -122,69 +122,6 @@ public class Engine {
         Thread t = new Thread(m);
         musicThreads.add(t);
         t.start();
-    }
-
-    //Adds a new object to the list
-    public static void AddNewObject(Gameobject gameobject){
-        objects.add(gameobject);
-    }
-
-    /*Below are various ways to find game objects other than having a
-    * static variable with it for cleanliness of code
-    * */
-    public static Gameobject FindGameObject(String name){
-        for(Gameobject g : objects){
-            if(g.getName().equals(name)){
-                return g;
-            }
-        }
-        return null;
-    }
-
-    public static Gameobject FindGameObject(Vector2 vec){
-        for(Gameobject g : objects){
-            if(g.isActive && !g.isEmpty()) {
-                Gameobject f = g.getPos() == vec ? g : null;
-                if(f != null){
-                    return f;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public static Gameobject FindGameObject(int id){
-        for(Gameobject g : objects){
-            if(g.isActive && !g.isEmpty()) {
-                if (g.getID() == id) {
-                    return g;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static Gameobject[] FindGameObjects(int[] ids){
-        ArrayList<Gameobject> ret = new ArrayList<>();
-        for(int i=0; i < ids.length; i++){
-            Gameobject g = Engine.FindGameObject(ids[i]);
-            if(g!=null){
-                ret.add(g);
-            }
-        }
-        return ret.toArray(Gameobject[]::new);
-    }
-
-    public static Gameobject[] FindGameObjects(Vector2[] positions){
-        ArrayList<Gameobject> ret = new ArrayList<>();
-        for(int i=0; i < positions.length; i++){
-            Gameobject g = Engine.FindGameObject(positions[i]);
-            if(g!=null){
-                ret.add(g);
-            }
-        }
-        return ret.toArray(Gameobject[]::new);
     }
 
     public static void changeBGChar(String s){

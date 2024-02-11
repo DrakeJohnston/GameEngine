@@ -6,15 +6,21 @@ import com.drake.engine.core.Gameobject;
 public class Physics {
 
     public static void UpdateColliders(){
-        for (Gameobject o : Engine.objects) {
-            Vector2[][] collider = o.getCollider();
-            int xVal = -o.getSize()/2;
-            int yVal = -o.getSize()/2;
+        for (Gameobject o : Gameobject.objects) {
+            Gameobject.CollisionBox collider = o.getCollider();
+            Vector2 op = o.getPos();
+            Vector2[][] col = collider.getCollider();
 
-            for(int x = 0; x < o.getSize(); x++){
-                for(int y = 0; y < o.getSize(); y++){
-                    collider[x][y] = new Vector2(o.getPos().x,o.getPos().y);
+            if (!col[0][0].equals(op)) {
+                Vector2[][] c = new Vector2[o.getSize()][o.getSize()];
+
+                for (int x = 0; x < o.getSize(); x++) {
+                    for (int y = 0; y < o.getSize(); y++) {
+                        c[x][y] = new Vector2(o.getPos().x + x, o.getPos().y + y);
+                    }
                 }
+
+                collider.setCollider(c);
             }
         }
     }
