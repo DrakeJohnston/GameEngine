@@ -20,6 +20,12 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
     public static int pixelCount_x;
     public static int pixelCount_y;
 
+
+    /**
+     * @param sizex size x of the screen
+     * @param sizey size y of the screen
+     * @param defColor the default color of the background
+     */
     public Screen(int sizex, int sizey, int defColor){
         addKeyListener(this);
         requestFocus();
@@ -37,17 +43,34 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
         }
     }
 
+
+    /**
+     * @param pos position to place pixel
+     * @param color color of the pixel
+     */
     public static void setPixel(Vector2 pos, int color){
         ScreenBuffer[pos.x][pos.y] = color;
     }
+
+    /**
+     * @param pos position of the pixel
+     * @param rgb rgb value of the pixel
+     * @param a alpha of the pixel
+     */
     public static void setPixel(Vector2 pos, int rgb, int a){
         ScreenBuffer[pos.x][pos.y] = rgb;
     }
 
+    /**
+     * @return returns the amount of pixels in x and y
+     */
     public static Vector2 getPixelCount(){
         return new Vector2(pixelCount_x, pixelCount_y);
     }
 
+    /**
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -68,6 +91,13 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
         repaint();
     }
 
+    /**
+     * Function for making a scaled pixel from smaller pixels, the primary way to create
+     * a pixel on the screen
+     * @param pos position of the pixel
+     * @param g graphics to use
+     * @param c color of the pixel
+     */
     public void CreatePixel(Vector2 pos, Graphics g, Color c){
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -77,6 +107,11 @@ public class Screen extends JPanel implements MouseListener, KeyListener {
         }
     }
 
+    /**
+     * checks if a pixel is in the specified location
+     * @param loc location to check for a pixel
+     * @return true or false based on pixel exsistance
+     */
     public static boolean hasPixelAt(Vector2 loc){
         return pixels[loc.x][loc.y] != 0;
     }

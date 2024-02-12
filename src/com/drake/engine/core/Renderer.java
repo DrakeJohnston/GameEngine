@@ -17,6 +17,12 @@ public class Renderer {
 
     static int defColor = 0;
 
+    /**
+     * Initializes important renderer values and sets up the swing window
+     * @param c background color to start with
+     * @param windowX window size in x direction
+     * @param windowY window size in y direction
+     */
     public static void InitRenderer(Color c, int windowX, int windowY){
         DIMX = windowX;
         DIMY = windowY;
@@ -43,6 +49,10 @@ public class Renderer {
         uiSpace.repaint();
     }
 
+
+    /**
+     * Renders objects to the screen
+     */
     public static void UpdateScreen(){
 
         for(int j = 0; j < Screen.ScreenBuffer.length; j++){

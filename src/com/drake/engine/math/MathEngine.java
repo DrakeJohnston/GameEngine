@@ -1,6 +1,12 @@
 package com.drake.engine.math;
 
 public class MathEngine {
+    /**
+     * Power function
+     * @param num base number for pow function
+     * @param power the exponent of the base
+     * @return returns the number to the power
+     */
     public static int Exponent(int num, int power)
     {
         int val = num;
@@ -10,6 +16,11 @@ public class MathEngine {
         return val;
     }
 
+    /**
+     * Square root function
+     * @param x number to take the root of
+     * @return returns the number square rooted
+     */
     public static int SRoot(int x){
         // Base Cases
         if (x == 0 || x == 1)
@@ -37,6 +48,11 @@ public class MathEngine {
         return (int)ans;
     }
 
+    /**
+     * The absolute value function
+     * @param n value to take abs of
+     * @return returns the absolute value of n
+     */
     public static int Abs(int n){
         if(n<0){
             return -n;
@@ -45,10 +61,19 @@ public class MathEngine {
         }
     }
 
+    /**
+     * Rounds the value down
+     * @param f float to round
+     * @return returns an int rounded down
+     */
     public static int RoundDown(float f){
         return (int) f;
     }
 
+    /**
+     * @param f the float to round
+     * @return returns the rounded up float as int
+     */
     public static int RoundUp(float f){
         int intVers = (int) f;
 
@@ -69,6 +94,12 @@ public class MathEngine {
         return intVers;
     }
 
+    /**
+     * Rounds the float in up or down based on standard
+     * conventions( f < 0.5 round down)
+     * @param f the float to round
+     * @return returns the rounded float as int
+     */
     public static int Round(float f){
         int intVers = (int) f;
         if(intVers > 0) {

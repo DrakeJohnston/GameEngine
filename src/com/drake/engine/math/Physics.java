@@ -5,6 +5,9 @@ import com.drake.engine.core.Gameobject;
 
 public class Physics {
 
+    /**
+     * Updates the colliders on gameobjects currently active in the scene
+     */
     public static void UpdateColliders(){
         for (Gameobject o : Gameobject.objects) {
             Gameobject.CollisionBox collider = o.getCollider();

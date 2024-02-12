@@ -41,6 +41,11 @@ public class GameFileManager {
 //        data.put(name, str);
 //    }
 
+    /**
+     * Saves data in the data list to a specified file with
+     * filename
+     * @param fileName name of the file to save
+     */
     public static void SaveData(String fileName){
         File file = new File(SaveLocation+fileName+fileExtension);
         try (FileWriter wr = new FileWriter(file)){
@@ -55,6 +60,11 @@ public class GameFileManager {
         }
     }
 
+    /**
+     * Offers the ability to change the file extension
+     * @param fileExt the desired file extention to use
+     * @param fileName name of the file to save
+     */
     public static void SaveData(String fileExt, String fileName){
         File file = new File(SaveLocation+fileName+fileExt);
         try (FileWriter wr = new FileWriter(file)){
@@ -69,6 +79,10 @@ public class GameFileManager {
         }
     }
 
+    /**
+     * Loads the data from the save file
+     * @param filePath file path of the data file
+     */
     public static void LoadData(String filePath){
         File file = new File(filePath);
         try(Scanner scan = new Scanner(file)){
@@ -82,6 +96,11 @@ public class GameFileManager {
         }
     }
 
+    /**
+     * @param varName name of the stored variable
+     * @param <T> type of the variable
+     * @return returns the variable stored
+     */
     public static <T> T GetData(String varName){
         if(data.containsKey(varName)) {
             return (T) data.get(varName);
@@ -90,18 +109,32 @@ public class GameFileManager {
         }
     }
 
+    /**
+     * @return returns the file extension
+     */
     public static String getFileExtension() {
         return fileExtension;
     }
 
+    /**
+     * @return returns the current save location
+     */
     public static String getSaveLocation() {
         return SaveLocation;
     }
 
+    /**
+     * Sets the save location
+     * @param saveLocation the location to use
+     */
     public static void setSaveLocation(String saveLocation) {
         SaveLocation = saveLocation;
     }
 
+    /**
+     * Sets the file extension to use in loads and saves
+     * @param fileExtension the file extension to use
+     */
     public void setFileExtension(String fileExtension) {
         GameFileManager.fileExtension = fileExtension;
     }

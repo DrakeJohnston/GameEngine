@@ -14,18 +14,38 @@ public class MusicHandler implements Runnable {
     boolean isOneshot;
     private boolean isActive = true;
 
+    /**
+     * Creates music with the given pitches rhythms and loops based on oneshot
+     * @param pitchArray the list of pitches to use
+     * @param rythymVal the list of rhythms to use alongside the pitches
+     * @param oneshot should the song play once or loop
+     */
     public MusicHandler(int[] pitchArray, double rythymVal, boolean oneshot){
         phrase = new Phrase();
         phrase.addNoteList(pitchArray, rythymVal);
         isOneshot = oneshot;
         Engine.musicInstances.add(this);
     }
+
+    /**
+     * Use's a phrase to play instead of defining it atomically
+     * @param p phrase to play
+     * @param oneshot should it play once
+     */
     public MusicHandler(Phrase p, boolean oneshot){
         phrase = p;
         isOneshot = oneshot;
         Engine.musicInstances.add(this);
     }
 
+    /**
+     * Creates a random phrase within the bounds
+     * @param length size of the resulting phrase
+     * @param upperBound upper bound for pitch randomness
+     * @param lowerBound lower bound for pitch randomness
+     * @param upperRhythm upper bound for the rhythm randomness
+     * @return returns a randomized phrase
+     */
     public static Phrase CreateRandomPhrase(int length, int upperBound, int lowerBound, int upperRhythm){
         Phrase ph = new Phrase();
 
@@ -39,6 +59,14 @@ public class MusicHandler implements Runnable {
         return ph;
     }
 
+    /**
+     * Creates a phrase with adjustable pitch randomness but locked rhythm
+     * to a bound of 4
+     * @param length size of the phrase
+     * @param upperBound upperbound of the pitch
+     * @param lowerBound lowerbound of the pitch
+     * @return returns a random phrase
+     */
     public static Phrase CreateRandomPhrase(int length, int upperBound, int lowerBound){
         Phrase ph = new Phrase();
 
@@ -61,6 +89,9 @@ public class MusicHandler implements Runnable {
         Play.midi(phrase);
     }
 
+    /**
+     * Stops current songs
+     */
     public void StopSong(){
         Play.stopMidi();
         Play.stopAudio();
