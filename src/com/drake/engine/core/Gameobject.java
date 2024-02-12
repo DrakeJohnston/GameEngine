@@ -21,15 +21,12 @@ public class Gameobject {
     private BufferedImage sprite;
     private int[] pixelArray;
     private int[] grayscalePixels;
-
-    //private Vector2[][] collider;
     CollisionBox collider;
     private boolean debugMode = false;
     private int center;
     //___________________________________________________
     private String name;
     private int size;
-
     private int RenderOrder;
     private int id = 0;
     static int lastID = 0;
@@ -45,17 +42,29 @@ public class Gameobject {
     private boolean isParent = false;
     private ArrayList<Gameobject> children = new ArrayList<>();
 
+    /**
+     * The class to store information regarding the collision box on game objects
+     */
     public class CollisionBox{
         int size;
         Vector2[][] collider;
         static ArrayList<CollisionBox> colliders = new ArrayList<>();
 
+        /**
+         * @param size size of the collider
+         * @param collider the matrix representing the collision box
+         */
         public CollisionBox(int size, Vector2[][] collider){
             this.collider = collider;
             this.size = size;
             colliders.add(this);
         }
 
+        /**
+         * checks the collider if it contains the position
+         * @param pos the position to check
+         * @return returns true if the collider has the position else returns false
+         */
         public boolean hasPos(Vector2 pos){
             for(Vector2[] v1 : collider){
                 for(Vector2 v2 : v1){
@@ -67,17 +76,28 @@ public class Gameobject {
             return false;
         }
 
+        /**
+         * changes the collider to the params collider
+         * @param collider the new collider
+         */
         public void setCollider(Vector2[][] collider) {
             this.collider = collider;
         }
 
+        /**
+         * @return returns the collider matrix
+         */
         public Vector2[][] getCollider() {
             return collider;
         }
     }
 
-    /*Constructor for the gameobject*/
-    //for empty game objects
+    /**
+     * Creates a sprite-less game object does not collide by default
+     * @param pos initial position of the object
+     * @param name name of game object
+     * @param size size of game object
+     */
     public Gameobject(Vector2 pos, String name, int size){
         this.pos = pos;
         this.name = name;
@@ -86,7 +106,13 @@ public class Gameobject {
         this.size = size;
         initGameObject();
     }
-    //for empty game objects
+
+    /**
+     * Creates a basic empty game object with given parameters
+     * @param pos initial position of the game object
+     * @param name name of the game object
+     * @param children children of the game object
+     */
     public Gameobject(Vector2 pos, String name, Gameobject[] children){
         this.pos = pos;
         this.name = name;
@@ -99,6 +125,14 @@ public class Gameobject {
         initGameObject();
     }
 
+    /**
+     * Creates a standard game object using params
+     * @param pos initial position of the object
+     * @param sprite sprite of the object
+     * @param size size of the object(default is based of sprite supplied)
+     * @param name name of the object
+     * @param canCollide should the object collide with others
+     */
     public Gameobject(Vector2 pos, BufferedImage sprite, int size, String name, boolean canCollide){
         this.pos = pos;
         this.name = name;
@@ -130,9 +164,9 @@ public class Gameobject {
         initGameObject();
     }
 
-    /*
-    * Setup for the gameobject, adding it to the engine list and giving it a unique id
-    * */
+    /**
+     * Setup for the gameobject, handles all required initial parameters
+     */
     public void initGameObject() {
         id = lastID+1;
         lastID = id;
@@ -150,6 +184,10 @@ public class Gameobject {
         AddNewObject(this);
     }
 
+    /**
+    * Transforms an object to a Vector2 position checking for collision
+    * @param pos position to move to.
+    * */
     public void transformObject(Vector2 pos){
         if(CollisionBox.colliders.size() > 1) {
             for(CollisionBox c : CollisionBox.colliders) {
@@ -162,26 +200,40 @@ public class Gameobject {
         }
     }
 
+    /**
+     * returns size of the gameobject
+     * @return returns size
+     */
     public int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
+    /**
+     * @return returns the id of the game object
+     */
     public int getID(){
         return id;
     }
 
+
+    /**
+     * @return returns the render order for the game object
+     */
     public int getRenderOrder(){
         return RenderOrder;
     }
 
+    /**
+     * @param order the render order of the object
+     */
     public void setRenderOrder(int order){
         RenderOrder = order;
     }
 
+    /**
+     * sets the active state of the game object
+     * @param active the new value of gameobjects active state
+     */
     public void setActive(boolean active) {
         if(this.isParent){
            for(Gameobject c : children){
@@ -193,71 +245,129 @@ public class Gameobject {
         }
     }
 
+    /**
+     * returns active state of the gameobject
+     * @return returns active
+     */
     public boolean getActive(){
         return isActive;
     }
 
+    /**
+     * returns position of the gameobject
+     * @return returns position
+     */
     public Vector2 getPos() {
         return pos;
     }
 
+    /**
+     * Sets the position of the game object, ignores collision detection
+     * @param pos position to set object to
+     */
     public void setPos(Vector2 pos) {
         this.pos = pos;
     }
 
+    /**
+     * returns the gray scale pixels of the gameobject
+     * @return returns array of pixels
+     */
     public int[] getGrayscalePixels() {
         return grayscalePixels;
     }
 
+    /**
+     * returns box collider of the gameobject
+     * @return returns collider
+     */
     public CollisionBox getCollider() {
         return collider;
     }
 
-    //    public String getSymbol() {
-//        return symbol;
-//    }
-//
-//    public void setSymbol(String symbol) {
-//        this.symbol = symbol;
-//    }
-
+    /**
+     * returns name of the gameobject
+     * @return returns name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Changes the name of the object
+     * @param name sets the name of the object
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * returns if the gameobject can collide
+     * @return returns bool
+     */
     public boolean isCanCollide() {
         return canCollide;
     }
 
+    /**
+     * Changes if the object can collide with other objects
+     * @param canCollide bool - should collide or not
+     */
     public void setCanCollide(boolean canCollide) {
         this.canCollide = canCollide;
     }
 
+
+    /**
+     * Tells you if the object is a parent or not
+     * @return returns bool - is a parent or child
+     */
     public boolean isParent() {
         return isParent;
     }
 
+
+    /**
+     * Changes the object to be a parent of another object.
+     * @param parent bool parent or not
+     */
     public void setParent(boolean parent) {
         isParent = parent;
     }
 
+    /**
+     * Returns a list of gameobject children
+     * @return ArrayList of children
+     */
     public ArrayList<Gameobject> getChildren() {
         return children;
     }
 
+    /**Function to add a list of children to the object,
+     * automatically sets object to parent
+     * @param children the children to add
+     * */
     public void setChildren(ArrayList<Gameobject> children) {
         this.children = children;
         this.isParent = true;
     }
+
+
+    /**
+     * Adds a single child and makes the object parented
+     * @param child the child to append
+     */
     public void addChild(Gameobject child){
         this.children.add(child);
         this.isParent = true;
     }
 
+
+    /**
+     * Removes specified gameobject child from child list, automatically checks if
+     * object still has children
+     * @param obj object to remove from list
+     */
     public void removeChild(Gameobject obj){
         this.children.remove(obj);
         if(children.isEmpty()){
@@ -265,22 +375,21 @@ public class Gameobject {
         }
     }
 
-//    public int[][] getModel() {
-//        return model;
-//    }
-//
-//    public void setModel(int[][] model) {
-//        this.model = model;
-//    }
 
-    //Adds a new object to the list
-    public static void AddNewObject(Gameobject gameobject){
+    /**
+     * Adds an object to the master game object list, this is done automatically
+     * by the gameobject class
+     * @param gameobject gameobject to add to the list of objects
+     */
+    private static void AddNewObject(Gameobject gameobject){
         objects.add(gameobject);
     }
 
-    /*Below are various ways to find game objects other than having a
-     * static variable with it for cleanliness of code
-     * */
+    /**
+     * Searches the object list for objects with the same name as the param
+     * @param name name of the object to look for
+     * @return returns the gameobject found or null if none
+     */
     public static Gameobject FindGameObject(String name){
         for(Gameobject g : objects){
             if(g.getName().equals(name)){
@@ -290,6 +399,11 @@ public class Gameobject {
         return null;
     }
 
+    /**
+     * Searches the object list for objects with the same position as the param
+     * @param vec position of the object to look for
+     * @return returns the gameobject found or null if none
+     */
     public static Gameobject FindGameObject(Vector2 vec){
         for(Gameobject g : objects){
             if(g.isActive && g.getPos().equals(vec)) {
@@ -299,6 +413,11 @@ public class Gameobject {
         return null;
     }
 
+    /**
+     * Searches the object list for objects with the same unique id as the param
+     * @param id id of the object to look for
+     * @return returns the gameobject found or null if none
+     */
     public static Gameobject FindGameObject(int id){
         for(Gameobject g : objects){
             if(g.isActive) {
@@ -310,6 +429,12 @@ public class Gameobject {
         return null;
     }
 
+
+    /**
+     * Finds a list of gameobjects by their unique ids
+     * @param ids list of unique object ids
+     * @return returns a gameobject list
+     */
     public static Gameobject[] FindGameObjects(int[] ids){
         ArrayList<Gameobject> ret = new ArrayList<>();
         for(int i=0; i < ids.length; i++){
@@ -321,6 +446,11 @@ public class Gameobject {
         return ret.toArray(Gameobject[]::new);
     }
 
+    /**
+     * Finds a list of gameobjects by their positions
+     * @param positions list of object positions
+     * @return returns a gameobject list
+     */
     public static Gameobject[] FindGameObjects(Vector2[] positions){
         ArrayList<Gameobject> ret = new ArrayList<>();
         for(int i=0; i < positions.length; i++){
@@ -332,24 +462,34 @@ public class Gameobject {
         return ret.toArray(Gameobject[]::new);
     }
 
+
+    /**
+     * @return returns if the object is empty
+     */
     public boolean isEmpty() {
         return isEmpty;
     }
 
+
+    /**
+     * @return returns the sprite of the gameobject if any
+     */
     public Image getSprite() {
         return sprite;
     }
 
+    /**
+     * @param sprite the sprite for the gameobject to render
+     */
     public void setSprite(BufferedImage sprite) {
         this.sprite = sprite;
     }
 
+    /**
+     * @return returns the center
+     */
     public int getCenter() {
         return center;
-    }
-
-    public void setCenter(int center) {
-        this.center = center;
     }
 
     public boolean isDebugMode() {
