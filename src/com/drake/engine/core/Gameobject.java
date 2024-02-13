@@ -27,16 +27,13 @@ public class Gameobject {
     //___________________________________________________
     private String name;
     private int size;
-    private int RenderOrder;
+    public static final int maxLayers = 5;
+    private int Layer;
     private int id = 0;
     static int lastID = 0;
 
     boolean isActive = true;
     private boolean canCollide = false;
-
-//    private int[][] model;
-//    public String[] chars;
-//    private final Vector2[][] collisionBox;
 
     private final boolean isEmpty;
     private boolean isParent = false;
@@ -219,15 +216,20 @@ public class Gameobject {
     /**
      * @return returns the render order for the game object
      */
-    public int getRenderOrder(){
-        return RenderOrder;
+    public int getLayer(){
+        return Layer;
     }
 
     /**
-     * @param order the render order of the object
+     * sets the objects layer, cannot go above 5 layers
+     * @param layer the render order of the object
      */
-    public void setRenderOrder(int order){
-        RenderOrder = order;
+    public void setLayer(int layer){
+        if(layer <= maxLayers) {
+            Layer = layer;
+        }else{
+            throw new RuntimeException("Layer above max allowed layers");
+        }
     }
 
     /**
