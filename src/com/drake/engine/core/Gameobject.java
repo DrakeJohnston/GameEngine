@@ -11,6 +11,14 @@ public class Gameobject {
 
     public static ArrayList<Gameobject> objects = new ArrayList<>();
 
+    public boolean isKinematic() {
+        return isKinematic;
+    }
+
+    public void setKinematic(boolean kinematic) {
+        isKinematic = kinematic;
+    }
+
     public static enum Direction{
         UP,DOWN,LEFT,RIGHT
     }
@@ -34,6 +42,12 @@ public class Gameobject {
 
     boolean isActive = true;
     private boolean canCollide = false;
+
+    /**
+     * Defines if the engine will automatically handle collisions, if true will not send
+     * OnCollision event
+     */
+    private boolean isKinematic = false;
 
     private final boolean isEmpty;
     private boolean isParent = false;
@@ -189,15 +203,16 @@ public class Gameobject {
     * @param pos position to move to.
     * */
     public void transformObject(Vector2 pos){
-        if(CollisionBox.colliders.size() > 1) {
-            for(CollisionBox c : CollisionBox.colliders) {
-                if (!c.hasPos(pos) && c != this.collider) {
-                    setPos(pos);
-                }
-            }
-        }else{
-            setPos(pos);
-        }
+        setPos(pos);
+//        if(CollisionBox.colliders.size() > 1) {
+//            for(CollisionBox c : CollisionBox.colliders) {
+//                if (!c.hasPos(pos) && c != this.collider) {
+//                    setPos(pos);
+//                }
+//            }
+//        }else{
+//            setPos(pos);
+//        }
     }
 
     /**
@@ -423,9 +438,13 @@ public class Gameobject {
      * @return returns the gameobject found or null if none
      */
     public static Gameobject FindGameObject(Vector2 vec){
-        for(Gameobject g : objects){
-            if(g.isActive && g.getPos().equals(vec)) {
-                return g;
+
+        for(CollisionBox c: CollisionBox.colliders){
+            if(c.hasPos(vec)){
+                Gameobject obj = c.parent;
+                if(obj.isActive){
+                    return obj;
+                }
             }
         }
         return null;

@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class Engine {
 
+    public static Engine engine;
+
     public static ArrayList<UIElement> uio = new ArrayList<>();
     public static boolean isActive = true;
     public static boolean debugGrid = false;
@@ -36,7 +38,7 @@ public class Engine {
     * */
     public void init(){
         Renderer.InitRenderer(bColor, 600,600);
-        Screen.engine = this;
+        engine = this;
         new File("./data").mkdir();
         gameLoop();
     }
@@ -52,6 +54,7 @@ public class Engine {
         while(isActive) {
 
             Physics.UpdateColliders();
+            Physics.CheckCollisions();
             Update();
             Renderer.UpdateScreen();
 
@@ -72,7 +75,7 @@ public class Engine {
 
     }
 
-    public static void OnCollision(CollisionOut col){
+    public void OnCollision(CollisionOut col){
 
     }
 

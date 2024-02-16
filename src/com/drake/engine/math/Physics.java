@@ -5,6 +5,7 @@ import com.drake.engine.core.Gameobject;
 import com.drake.engine.helpers.CollisionOut;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Physics {
 
@@ -23,6 +24,7 @@ public class Physics {
             if(o!=null){
                 hits.add(o);
             }
+
             if(currentSpace.equals(endZone)){
                 break;
             }
@@ -55,29 +57,79 @@ public class Physics {
     }
 
     public static void CheckCollisions(){
-        ArrayList<Gameobject.CollisionBox> cb = new ArrayList<>();
+        Gameobject a = Gameobject.objects.get(0);
+        ArrayList<Gameobject> b = new ArrayList<>(Gameobject.objects);
+        b.remove(0);
 
-        for(Gameobject.CollisionBox c : Gameobject.CollisionBox.colliders){
-            cb.add(new Gameobject.CollisionBox(c.getCollider().length, c.getCollider(), c.parent));
+        //Checks a against all objects in b
+        for(Gameobject obj : b){
+            for(Vector2[] v : obj.getCollider().getCollider()){
+                for(Vector2 v2 : v){
+                    if(a.getCollider().hasPos(v2)){
+                        if(obj.isKinematic()) {
+                            Engine.engine.OnCollision(new CollisionOut(obj, v2, new Vector2(0, 0)));
+                        }else {
+                            outerloop:
+                            while (true) {
+                                for (Vector2[] veca : a.getCollider().getCollider()) {
+                                    for (Vector2 vecb : veca) {
+                                        if (obj.getCollider().hasPos(vecb)) {
+                                            Vector2 vec = a.getPos();
+                                            vec.subtract(new Vector2(1, 1));
+                                            a.transformObject(vec);
+                                            UpdateColliders();
+                                        } else {
+                                            break outerloop;
+                                        }
+                                    }
+                                }
+                            }
+                            System.out.println("Worked? " + a.getPos());
+                        }
+                    }
+                }
+            }
         }
 
-        int i = Gameobject.CollisionBox.colliders.size();
-        while(i > 0) {
-            Gameobject.CollisionBox currBox = cb.get(0);
-            for (Gameobject.CollisionBox box : cb) {
-                if (box != currBox) {
-                    for (Vector2[] x : box.getCollider()) {
-                        for (Vector2 y : x) {
-                            if (currBox.hasPos(y)) {
-                                Engine.OnCollision(new CollisionOut(box.parent, y, new Vector2(0, 0)));
-                                System.out.println("Collision detected");
+        CheckCollisions(b);
+
+    }
+    private static void CheckCollisions(ArrayList<Gameobject> o){
+        Gameobject a = o.get(0);
+        ArrayList<Gameobject> b = new ArrayList<>(o);
+        b.remove(0);
+
+        //Checks a against all objects in b
+        for(Gameobject obj : b){
+            for(Vector2[] v : obj.getCollider().getCollider()){
+                for(Vector2 v2 : v){
+                    if(a.getCollider().hasPos(v2)){
+                        if(obj.isKinematic()) {
+                            Engine.engine.OnCollision(new CollisionOut(obj, v2, new Vector2(0, 0)));
+                        }else{
+                            outerloop:
+                            while (true) {
+                                for (Vector2[] veca : a.getCollider().getCollider()) {
+                                    for (Vector2 vecb : veca) {
+                                        if (obj.getCollider().hasPos(vecb)) {
+                                            Vector2 vec = a.getPos();
+                                            vec.subtract(new Vector2(1, 1));
+                                            a.transformObject(vec);
+                                            UpdateColliders();
+                                        } else {
+                                            break outerloop;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-            cb.remove(0);
-            i--;
+        }
+
+        if(o.size() > 1) {
+            CheckCollisions(b);
         }
     }
 

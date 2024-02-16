@@ -4,6 +4,7 @@ import com.drake.engine.core.Gameobject;
 import com.drake.engine.math.Physics;
 import com.drake.engine.math.Vector2;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -28,11 +29,6 @@ public class PhysicsTest {
 
         ArrayList<Gameobject> hits = Physics.Raycast(10, oa.getPos(), new Vector2(1,0));
         assertEquals(ob, hits.get(0));
-    }
-
-    @After
-    public void tearDown(){
-        Gameobject.ClearGameObjects();
     }
 
     @Test
@@ -74,5 +70,11 @@ public class PhysicsTest {
 
         Physics.UpdateColliders();
         Physics.CheckCollisions();
+    }
+
+    @After
+    public void tearDown(){
+        Gameobject.ClearGameObjects();
+
     }
 }
