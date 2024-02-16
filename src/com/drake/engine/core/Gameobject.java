@@ -11,6 +11,14 @@ public class Gameobject {
 
     public static ArrayList<Gameobject> objects = new ArrayList<>();
 
+    public boolean isKinematic() {
+        return isKinematic;
+    }
+
+    public void setKinematic(boolean kinematic) {
+        isKinematic = kinematic;
+    }
+
     public static enum Direction{
         UP,DOWN,LEFT,RIGHT
     }
@@ -27,16 +35,19 @@ public class Gameobject {
     //___________________________________________________
     private String name;
     private int size;
-    private int RenderOrder;
+    public static final int maxLayers = 5;
+    private int Layer;
     private int id = 0;
     static int lastID = 0;
 
     boolean isActive = true;
     private boolean canCollide = false;
 
-//    private int[][] model;
-//    public String[] chars;
-//    private final Vector2[][] collisionBox;
+    /**
+     * Defines if the engine will automatically handle collisions, if true will not send
+     * OnCollision event
+     */
+    private boolean isKinematic = false;
 
     private final boolean isEmpty;
     private boolean isParent = false;
@@ -45,18 +56,21 @@ public class Gameobject {
     /**
      * The class to store information regarding the collision box on game objects
      */
-    public class CollisionBox{
+    public static class CollisionBox{
         int size;
         Vector2[][] collider;
-        static ArrayList<CollisionBox> colliders = new ArrayList<>();
+        public static ArrayList<CollisionBox> colliders = new ArrayList<>();
+
+        public Gameobject parent;
 
         /**
          * @param size size of the collider
          * @param collider the matrix representing the collision box
          */
-        public CollisionBox(int size, Vector2[][] collider){
+        public CollisionBox(int size, Vector2[][] collider, Gameobject parent){
             this.collider = collider;
             this.size = size;
+            this.parent = parent;
             colliders.add(this);
         }
 
@@ -179,7 +193,7 @@ public class Gameobject {
             }
         }
 
-        collider = new CollisionBox(size, c);
+        collider = new CollisionBox(size, c, this);
 
         AddNewObject(this);
     }
@@ -189,15 +203,16 @@ public class Gameobject {
     * @param pos position to move to.
     * */
     public void transformObject(Vector2 pos){
-        if(CollisionBox.colliders.size() > 1) {
-            for(CollisionBox c : CollisionBox.colliders) {
-                if (!c.hasPos(pos) && c != this.collider) {
-                    setPos(pos);
-                }
-            }
-        }else{
-            setPos(pos);
-        }
+        setPos(pos);
+//        if(CollisionBox.colliders.size() > 1) {
+//            for(CollisionBox c : CollisionBox.colliders) {
+//                if (!c.hasPos(pos) && c != this.collider) {
+//                    setPos(pos);
+//                }
+//            }
+//        }else{
+//            setPos(pos);
+//        }
     }
 
     /**
@@ -219,15 +234,20 @@ public class Gameobject {
     /**
      * @return returns the render order for the game object
      */
-    public int getRenderOrder(){
-        return RenderOrder;
+    public int getLayer(){
+        return Layer;
     }
 
     /**
-     * @param order the render order of the object
+     * sets the objects layer, cannot go above 5 layers
+     * @param layer the render order of the object
      */
-    public void setRenderOrder(int order){
-        RenderOrder = order;
+    public void setLayer(int layer){
+        if(layer <= maxLayers) {
+            Layer = layer;
+        }else{
+            throw new RuntimeException("Layer above max allowed layers");
+        }
     }
 
     /**
@@ -385,6 +405,19 @@ public class Gameobject {
         objects.add(gameobject);
     }
 
+    public static void RemoveGameObject(String name){
+        Gameobject r = FindGameObject(name);
+        if(r!=null) {
+            objects.remove(r);
+        }
+    }
+
+    public static void ClearGameObjects(){
+        objects.clear();
+    }
+
+    //todo: add find game objects for finding objects in the same space
+
     /**
      * Searches the object list for objects with the same name as the param
      * @param name name of the object to look for
@@ -405,9 +438,13 @@ public class Gameobject {
      * @return returns the gameobject found or null if none
      */
     public static Gameobject FindGameObject(Vector2 vec){
-        for(Gameobject g : objects){
-            if(g.isActive && g.getPos().equals(vec)) {
-                return g;
+
+        for(CollisionBox c: CollisionBox.colliders){
+            if(c.hasPos(vec)){
+                Gameobject obj = c.parent;
+                if(obj.isActive){
+                    return obj;
+                }
             }
         }
         return null;

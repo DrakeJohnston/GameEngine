@@ -1,6 +1,7 @@
 import com.drake.engine.GameFileManager;
 import com.drake.engine.core.Engine;
 import com.drake.engine.core.Gameobject;
+import com.drake.engine.helpers.CollisionOut;
 import com.drake.engine.math.Vector2;
 
 import java.awt.event.KeyEvent;
@@ -40,11 +41,20 @@ public class AAAAAAAA extends Engine {
         //Gameobject wall = new Gameobject(new Vector2(30,30), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\Wall.png"), 8, "Wall", true);
 
         Gameobject t1 = new Gameobject(new Vector2(1,1), "t1",1);
-        Gameobject t2 = new Gameobject(new Vector2(5,5), "t1",1);
-        t1.transformObject(new Vector2(5,5));
+        Gameobject t2 = new Gameobject(new Vector2(5,5), "t2",3);
+
+        t1.setCanCollide(true);
+        t2.setCanCollide(true);
+
+        t1.transformObject(new Vector2(6,6));
         System.out.println(t1.getPos());
 
         super.init();
+    }
+
+    @Override
+    public void OnCollision(CollisionOut col) {
+        System.out.println("Collision at: " + col.location);
     }
 
     @Override

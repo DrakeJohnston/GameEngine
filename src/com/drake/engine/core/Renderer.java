@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Renderer {
 
@@ -16,6 +17,8 @@ public class Renderer {
     public static JFrame window;
 
     static int defColor = 0;
+
+    public static ArrayList<Gameobject> renderQueue = new ArrayList<>();
 
     /**
      * Initializes important renderer values and sets up the swing window
@@ -61,7 +64,15 @@ public class Renderer {
             }
         }
 
-        for(Gameobject g : Gameobject.objects){
+        for(int i =0; i < Gameobject.maxLayers; i++) {
+            for (Gameobject o : Gameobject.objects) {
+                if(o.getLayer() == i){
+                    renderQueue.add(o);
+                }
+            }
+        }
+
+        for(Gameobject g : renderQueue){
             if(!g.isEmpty()) {
                 BufferedImage i = (BufferedImage) g.getSprite();
                 //(i.getWidth()*i.getHeight()) * 2 is the proper equation
