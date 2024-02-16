@@ -2,6 +2,7 @@ package com.drake.engine.core;
 
 import com.drake.engine.MusicHandler;
 import com.drake.engine.core.UI.UIElement;
+import com.drake.engine.helpers.CollisionOut;
 import com.drake.engine.math.Physics;
 import com.drake.engine.math.Vector2;
 import jm.music.data.Phrase;
@@ -68,6 +69,10 @@ public class Engine {
     }
 
     public void Update(){
+
+    }
+
+    public static void OnCollision(CollisionOut col){
 
     }
 

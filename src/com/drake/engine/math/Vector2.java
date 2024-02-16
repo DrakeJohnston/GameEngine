@@ -19,6 +19,32 @@ public class Vector2 {
 
     //Todo: test fuctionallity of new functions
 
+    public static  Vector2 add(Vector2 a, Vector2 b){
+        return new Vector2(a.x + b.x, a.y + b.y);
+    }
+    public void add(Vector2 a){
+        this.x += a.x;
+        this.y += a.y;
+    }
+    public static  Vector2 subtract(Vector2 a, Vector2 b){
+        return new Vector2(a.x - b.x, a.y - b.y);
+    }
+    public void subtract(Vector2 a){
+        this.x -= a.x;
+        this.y -= a.y;
+    }
+
+    public static Vector2 multiply(Vector2 a, Vector2 b){
+        int xf = a.x * b.x;
+        int yf = a.y * b.y;
+        return new Vector2(xf, yf);
+    }
+    public static Vector2 multiply(Vector2 a, int b){
+        int xf = a.x * b;
+        int yf = a.y * b;
+        return new Vector2(xf, yf);
+    }
+
     /**
      * @param a vector a
      * @param b vector b

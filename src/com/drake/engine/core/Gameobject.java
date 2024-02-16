@@ -42,18 +42,21 @@ public class Gameobject {
     /**
      * The class to store information regarding the collision box on game objects
      */
-    public class CollisionBox{
+    public static class CollisionBox{
         int size;
         Vector2[][] collider;
-        static ArrayList<CollisionBox> colliders = new ArrayList<>();
+        public static ArrayList<CollisionBox> colliders = new ArrayList<>();
+
+        public Gameobject parent;
 
         /**
          * @param size size of the collider
          * @param collider the matrix representing the collision box
          */
-        public CollisionBox(int size, Vector2[][] collider){
+        public CollisionBox(int size, Vector2[][] collider, Gameobject parent){
             this.collider = collider;
             this.size = size;
+            this.parent = parent;
             colliders.add(this);
         }
 
@@ -176,7 +179,7 @@ public class Gameobject {
             }
         }
 
-        collider = new CollisionBox(size, c);
+        collider = new CollisionBox(size, c, this);
 
         AddNewObject(this);
     }
@@ -386,6 +389,19 @@ public class Gameobject {
     private static void AddNewObject(Gameobject gameobject){
         objects.add(gameobject);
     }
+
+    public static void RemoveGameObject(String name){
+        Gameobject r = FindGameObject(name);
+        if(r!=null) {
+            objects.remove(r);
+        }
+    }
+
+    public static void ClearGameObjects(){
+        objects.clear();
+    }
+
+    //todo: add find game objects for finding objects in the same space
 
     /**
      * Searches the object list for objects with the same name as the param

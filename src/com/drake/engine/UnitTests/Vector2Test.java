@@ -119,4 +119,40 @@ public class Vector2Test {
         String message = "Expected: true got: " + actual;
         assertFalse(message, actual);
     }
+
+    @Test
+    public void add() {
+        Vector2 a = new Vector2(1,1);
+        Vector2 b = new Vector2(1,1);
+        assertEquals(new Vector2(2,2), Vector2.add(a, b));
+    }
+
+    @Test
+    public void add_2() {
+        Vector2 a = new Vector2(1,1);
+        Vector2 b = new Vector2(-1,1);
+        assertEquals(new Vector2(0,2), Vector2.add(a, b));
+    }
+    @Test
+    public void add_3() {
+        Vector2 a = new Vector2(1,1);
+        Vector2 b = new Vector2(1,1);
+        a.add(b);
+        assertEquals(new Vector2(2,2), a);
+    }
+
+    @Test
+    public void subtract() {
+        Vector2 a = new Vector2(1,1);
+        Vector2 b = new Vector2(1,1);
+        assertEquals(new Vector2(0,0), Vector2.subtract(a, b));
+    }
+
+    @Test
+    public void subtract_2() {
+        Vector2 a = new Vector2(1,1);
+        Vector2 b = new Vector2(1,1);
+        a.subtract(b);
+        assertEquals(new Vector2(0,0), a);
+    }
 }
