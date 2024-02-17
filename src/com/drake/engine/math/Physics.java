@@ -84,7 +84,7 @@ public class Physics {
                                     }
                                 }
                             }
-                            System.out.println("Worked? " + a.getPos());
+                            //System.out.println("Worked? " + a.getPos());
                         }
                     }
                 }

@@ -23,80 +23,25 @@ public class AAAAAAAA extends Engine {
 
     @Override
     public void init() {
-        direction = Gameobject.Direction.UP;
-        Engine.changeBGChar("-");
-        //game.addChild(player);
-
-//        int[] p = new int[]{JMC.A1, JMC.A0, JMC.A1, JMC.A6, JMC.A6};
-//        Phrase ph = MusicHandler.CreateRandomPhrase(5, 100, 90);
-//        Engine.PlaySong(p, JMC.EIGHTH_NOTE, false);
-
-        GameFileManager.LoadData(GameFileManager.getSaveLocation()+"SAVEFILE.sgam");
-        System.out.println(GameFileManager.GetData("E") + " Dis the data!!!");
-        int testT = Integer.parseInt(GameFileManager.GetData("E"));
-        GameFileManager.SaveInteger("E", 55);
-
-
-        //Gameobject test = new Gameobject(new Vector2(5,5), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\TestSprite3.png"), 5, "Test", false);
-        //Gameobject wall = new Gameobject(new Vector2(30,30), Engine.LoadImage("D:\\Repositories\\GameEngine\\Resources\\Wall.png"), 8, "Wall", true);
-
-        Gameobject t1 = new Gameobject(new Vector2(1,1), "t1",1);
-        Gameobject t2 = new Gameobject(new Vector2(5,5), "t2",3);
-
-        t1.setCanCollide(true);
-        t2.setCanCollide(true);
-
-        t1.transformObject(new Vector2(6,6));
-        System.out.println(t1.getPos());
-
         super.init();
     }
 
     @Override
     public void OnCollision(CollisionOut col) {
-        System.out.println("Collision at: " + col.location);
     }
 
     @Override
     public void OnKeyPressed(KeyEvent e) {
         super.OnKeyPressed(e);
-//        Gameobject o = Engine.FindGameObject("Test");
-//        //CollisionReturn c = Physics.HasCollided(o);
-//
-//        if(e.getKeyCode() == KeyEvent.VK_D){
-//            if(!o.hasCollided()){
-//                o.setPos(new Vector2(o.getPos().x+1, o.getPos().y));
-//            }
-//        }
-//        if(e.getKeyCode() == KeyEvent.VK_S){
-//            if(!o.hasCollided()){
-//                //System.out.println("Test");
-//                o.setPos(new Vector2(o.getPos().x, o.getPos().y+1));
-//            }
-//        }
-//        if(e.getKeyCode() == KeyEvent.VK_A){
-//            if(!o.hasCollided()){
-//                o.setPos(new Vector2(o.getPos().x-1, o.getPos().y));
-//            }
-//        }
-//        if(e.getKeyCode() == KeyEvent.VK_W){
-//            if(!o.hasCollided()){
-//                o.setPos(new Vector2(o.getPos().x, o.getPos().y-1));
-//            }
-//        }
     }
 
     @Override
     public void OnGameExit() {
-        GameFileManager.SaveData("SAVEFILE");
         super.OnGameExit();
     }
 
     @Override
     public void Update() {
-
-        //player.Move(1, direction);
-
         super.Update();
     }
 }

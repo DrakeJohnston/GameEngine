@@ -32,10 +32,11 @@ public class Engine {
     public static ArrayList<Thread> musicThreads = new ArrayList<>();
 
 
-    /*Init function expected to be overriden to add new functionality on its own
-    * starts the game loop and sets up the gui. Note: use super(bla, bla)
-    * so that the rest of the init function continues
-    * */
+    /**
+     * Init function expected to be overriden to add new functionality on its own
+     * starts the game loop and sets up the gui. Note: use super(bla, bla)
+     * so that the rest of the init function continues
+     */
     public void init(){
         Renderer.InitRenderer(bColor, 600,600);
         engine = this;
@@ -43,18 +44,21 @@ public class Engine {
         gameLoop();
     }
 
-    /*The Main game loop where updates happen, For now an update happens every 100 ms
-    * but a better method will be implemented once found
-    * Again its expected that this will be overridden but do not forget to super
-    * after your code
-    * */
+    /**
+     * The Main game loop where updates happen, For now an update happens every 100 ms
+     * but a better method will be implemented once found
+     * Again its expected that this will be overridden but do not forget to super
+     * after your code
+     */
     //TODO: find a new method of creating a game loop
     private void gameLoop(){
 
         while(isActive) {
 
-            Physics.UpdateColliders();
-            Physics.CheckCollisions();
+            if(!Gameobject.objects.isEmpty()) {
+                Physics.UpdateColliders();
+                Physics.CheckCollisions();
+            }
             Update();
             Renderer.UpdateScreen();
 
@@ -71,10 +75,19 @@ public class Engine {
 
     }
 
+    /**
+     * Handles the update loop, override and append code
+     * that should be run multiple times
+     */
     public void Update(){
 
     }
 
+    /**
+     * Gets called when a collision occurs between two non-kinematic
+     * objects
+     * @param col the collision information
+     */
     public void OnCollision(CollisionOut col){
 
     }
@@ -93,6 +106,9 @@ public class Engine {
         }
     }
 
+    /**
+     * Gets called whenever the game is exiting
+     */
     public void OnGameExit() {
         for(MusicHandler m : musicInstances){
             m.setActive(false);
@@ -102,10 +118,18 @@ public class Engine {
         }
     }
 
+    /**
+     * Gets called when a key is pressed
+     * @param e key event(uses swings key event listener)
+     */
     public void OnKeyPressed(KeyEvent e){
 
     }
 
+    /**
+     * Gets called when a key is released
+     * @param e key event(uses swings key event listener)
+     */
     public void OnKeyReleased(KeyEvent e){
 
     }
